@@ -69,5 +69,7 @@ public class LoginPage {
     public LoginPage validateLoginSuccess() {
         productsTitle.shouldBe(Condition.visible).shouldHave(Condition.text("Products"));
         return this;
+
+
     }
 }
