@@ -1,8 +1,11 @@
 package org.example.pages;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import java.util.Arrays;
+import java.util.List;
 import org.example.constants.DefaultDuration;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -35,11 +38,6 @@ public class AllItemsPage {
         return clickAddToCartButton(itemIndex);
     }
 
-//    private void checkElement(SelenideElement element, String expectedText) {
-//        element.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-//                .shouldHave(Condition.text(expectedText));
-//    }
-
     public AllItemsPage clickAddToCartButton(int btnIndex) {
         addToCardBtnList.get(btnIndex - 1)
                 .shouldBe(Condition.visible)
@@ -48,6 +46,17 @@ public class AllItemsPage {
         return this;
     }
 
+    public AllItemsPage checkAllPageProductsAvailable() {
+        List<String> listOfProductLabels =
+                Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light",
+                        "Sauce Labs Bolt T-Shirt", "Sauce Labs Fleece Jacket",
+                        "Sauce Labs Onesie", "Test.allTheThings() T-Shirt (Red)");
+
+        $$(".inventory_item_name ")
+                .shouldHave(CollectionCondition.size(listOfProductLabels.size()))
+                .shouldHave(CollectionCondition.exactTexts(listOfProductLabels));
+        return this;
+    }
 
 //    public AllItemsPage checkMenuItems(ProductItems productType) {
 //        String locator = "(//div[@class='inventory_item_name '])[%s]";
