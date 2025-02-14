@@ -1,6 +1,5 @@
 package org.example.pages;
 
-import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -18,7 +17,7 @@ public class AllItemsPage {
     private final ElementsCollection productNamesList = $$x("//div[@class='inventory_item_name ']");
     private final ElementsCollection productPriceList = $$x("//div[@class='inventory_item_price']");
     private final ElementsCollection productDescriptionList = $$x("//div[@class='inventory_item_desc']");
-
+    private final ElementsCollection addToCardBtnList = $$x("//button[text() = 'Add to cart']");
 
 
     public static AllItemsPage initAllItemsPage() {
@@ -26,20 +25,27 @@ public class AllItemsPage {
         return new AllItemsPage();
     }
 
-    public AllItemsPage checkProductDetails(int itemIndex, Product expectedProduct) {
-        SelenideElement product = productsList.get(itemIndex - 1);
+    public AllItemsPage addItemToCard(int itemIndex, Product expectedProduct) {
+        SelenideElement product = productsList.get(itemIndex - 1).shouldBe(Condition.visible);
         product.shouldBe(Condition.visible, DefaultDuration.DEFAULT);
 
-        checkElement(productNamesList.get(itemIndex - 1), expectedProduct.getName());
-        checkElement(productDescriptionList.get(itemIndex - 1), expectedProduct.getDescription());
-        checkElement(productPriceList.get(itemIndex - 1), expectedProduct.getPrice());
-
-        return this;
+        productNamesList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getName()));
+        productDescriptionList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getDescription()));
+        productPriceList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getPrice()));
+        return clickAddToCartButton(itemIndex);
     }
 
-    private void checkElement(SelenideElement element, String expectedText) {
-        element.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text(expectedText));
+//    private void checkElement(SelenideElement element, String expectedText) {
+//        element.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+//                .shouldHave(Condition.text(expectedText));
+//    }
+
+    public AllItemsPage clickAddToCartButton(int btnIndex) {
+        addToCardBtnList.get(btnIndex - 1)
+                .shouldBe(Condition.visible)
+                .shouldHave(Condition.text("Add to cart"))
+                .click();
+        return this;
     }
 
 
