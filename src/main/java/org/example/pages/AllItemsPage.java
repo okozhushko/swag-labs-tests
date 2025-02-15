@@ -6,6 +6,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import java.util.Arrays;
 import java.util.List;
+import org.bouncycastle.crypto.agreement.srp.SRP6Client;
 import org.example.constants.DefaultDuration;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
@@ -28,14 +29,14 @@ public class AllItemsPage {
         return new AllItemsPage();
     }
 
-    public AllItemsPage addItemToCard(int itemIndex, Product expectedProduct) {
+    public AllItemsPage checkItemDetails(int itemIndex, Product expectedProduct) {
         SelenideElement product = productsList.get(itemIndex - 1).shouldBe(Condition.visible);
         product.shouldBe(Condition.visible, DefaultDuration.DEFAULT);
 
         productNamesList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getName()));
         productDescriptionList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getDescription()));
         productPriceList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getPrice()));
-        return clickAddToCartButton(itemIndex);
+        return this;
     }
 
     public AllItemsPage clickAddToCartButton(int btnIndex) {
@@ -63,11 +64,10 @@ public class AllItemsPage {
                 .shouldHave(Condition.text(value));
         return this;
     }
-    public AllItemsPage clickRemoveItem(int btnIndex) {
+    public AllItemsPage checkRemoveItemBtn(int btnIndex) {
         addToCardBtnList.get(btnIndex - 1)
                 .shouldBe(Condition.visible)
-                .shouldHave(Condition.text("Remove"))
-                .click();
+                .shouldHave(Condition.text("Remove"));
         return this;
     }
 
@@ -77,6 +77,13 @@ public class AllItemsPage {
                 .click();
         return CartPage.initCartPage();
 
+    }
+
+    public AllItemsPage clickAddItemBtn(int itemIndex, String btnName) {
+        addToCardBtnList.get(itemIndex - 1).shouldBe(Condition.visible,DefaultDuration.DEFAULT)
+                .shouldHave(Condition.text(btnName))
+                .click();
+        return this;
     }
 
 

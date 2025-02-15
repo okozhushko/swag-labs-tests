@@ -19,12 +19,20 @@ public class TestCheckProductsPage {
                 .validateLoginSuccess();
         AllItemsPage.initAllItemsPage()
                 .checkAllPageItemsAvailable()
-                .addItemToCard(3, expectedProduct)
+                .checkItemDetails(3, expectedProduct)
+                .clickAddItemBtn(3, "Add to cart")
                 .checkItemAddedToBucket("1")
-                .clickRemoveItem(3)
-                .addItemToCard(3, expectedProduct)
+                .checkRemoveItemBtn(3)
                 .clickOnBucketIcon()
-                .checkCartItem(itemName, itemDescription, itemPrice);
+                .checkCartItem(itemName, itemDescription, itemPrice)
+                .checkCartItemDescription()
+                .clickContinueShopingBtn()
+                .checkItemDetails(4, expectedProduct) //TODO need to fix
+                .clickAddItemBtn(4, "Add to cart");
+
+
+
+        //.removeCartItem()
 
     }
 }
