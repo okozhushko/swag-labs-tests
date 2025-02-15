@@ -1,5 +1,6 @@
 package org.example.base.tests;
 
+import com.codeborne.selenide.Selenide;
 import org.example.pages.AllItemsPage;
 import org.example.pages.LoginPage;
 import org.example.pages.Product;
@@ -19,6 +20,8 @@ public class TestCheckProductsPage {
                 .validateLoginSuccess();
         AllItemsPage.initAllItemsPage()
                 .checkAllPageProductsAvailable()
-                .addItemToCard(3, expectedProduct);
+                .addItemToCard(3, expectedProduct)
+                .checkItemAddedToBucket("1")
+                .clickRemoveItem(3);
     }
 }

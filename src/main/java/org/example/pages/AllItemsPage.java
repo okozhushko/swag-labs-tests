@@ -20,7 +20,7 @@ public class AllItemsPage {
     private final ElementsCollection productNamesList = $$x("//div[@class='inventory_item_name ']");
     private final ElementsCollection productPriceList = $$x("//div[@class='inventory_item_price']");
     private final ElementsCollection productDescriptionList = $$x("//div[@class='inventory_item_desc']");
-    private final ElementsCollection addToCardBtnList = $$x("//button[text() = 'Add to cart']");
+    private final ElementsCollection addToCardBtnList = $$(".btn_inventory");
 
 
     public static AllItemsPage initAllItemsPage() {
@@ -55,6 +55,19 @@ public class AllItemsPage {
         $$(".inventory_item_name ")
                 .shouldHave(CollectionCondition.size(listOfProductLabels.size()))
                 .shouldHave(CollectionCondition.exactTexts(listOfProductLabels));
+        return this;
+    }
+
+    public AllItemsPage checkItemAddedToBucket(String value) {
+        $(".shopping_cart_badge").shouldBe(Condition.visible,DefaultDuration.DEFAULT)
+                .shouldHave(Condition.text(value));
+        return this;
+    }
+    public AllItemsPage clickRemoveItem(int btnIndex) {
+        addToCardBtnList.get(btnIndex - 1)
+                .shouldBe(Condition.visible)
+                .shouldHave(Condition.text("Remove"))
+                .click();
         return this;
     }
 
