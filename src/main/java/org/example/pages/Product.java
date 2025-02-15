@@ -2,13 +2,13 @@ package org.example.pages;
 
 public class Product {
     private final String name;
-    private final String price;
     private final String description;
+    private final String price;
 
-    public Product(String name, String price, String description) {
+    public Product(String name, String description, String price) {
         this.name = name;
-        this.price = price;
         this.description = description;
+        this.price = price;
     }
 
     public String getName() {

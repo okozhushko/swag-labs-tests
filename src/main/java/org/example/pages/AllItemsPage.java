@@ -46,7 +46,7 @@ public class AllItemsPage {
         return this;
     }
 
-    public AllItemsPage checkAllPageProductsAvailable() {
+    public AllItemsPage checkAllPageItemsAvailable() {
         List<String> listOfProductLabels =
                 Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light",
                         "Sauce Labs Bolt T-Shirt", "Sauce Labs Fleece Jacket",
@@ -70,6 +70,15 @@ public class AllItemsPage {
                 .click();
         return this;
     }
+
+    public CartPage clickOnBucketIcon() {
+        $("#shopping_cart_container .shopping_cart_link")
+                .shouldBe(Condition.visible,DefaultDuration.DEFAULT)
+                .click();
+        return CartPage.initCartPage();
+
+    }
+
 
 //    public AllItemsPage checkMenuItems(ProductItems productType) {
 //        String locator = "(//div[@class='inventory_item_name '])[%s]";
