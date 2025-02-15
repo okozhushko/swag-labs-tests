@@ -33,7 +33,13 @@ public class TestCheckProductsPage {
                 .checkCartItemDescription()
                 .clickContinueShopingBtn()
                 .checkItemDetails(4, expectedProductSecond)
-                .clickAddItemBtn(4, "Add to cart");
+                .clickAddItemBtn(4, "Add to cart")
+                .checkItemAddedToBucket("2")
+                .checkRemoveItemBtn(3)
+                .clickOnBucketIcon()
+                .checkCartItem(secondItemName, secondItemDescription, secondItemPrice);//TODO Add switch case
+
+
 
 
 
