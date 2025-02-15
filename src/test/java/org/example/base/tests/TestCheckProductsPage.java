@@ -7,27 +7,31 @@ import org.testng.annotations.Test;
 
 public class TestCheckProductsPage {
 
-    String itemDescription = "Get your testing superhero on with the Sauce Labs bolt T-shirt." +
+    String firstItemDescription = "Get your testing superhero on with the Sauce Labs bolt T-shirt." +
             " From American Apparel, 100% ringspun combed cotton, heather gray with red bolt.";
-    String itemName = "Sauce Labs Bolt T-Shirt";
-    String itemPrice = "$15.99";
+    String firstItemName = "Sauce Labs Bolt T-Shirt";
+    String firstItemPrice = "$15.99";
+    String secondItemDescription = "It's not every day that you come across a midweight quarter-zip fleece jacket capable of handling everything from a relaxing day outdoors to a busy day at the office.";
+    String secondItemName = "Sauce Labs Fleece Jacket";
+    String secondItemPrice = "$49.99";
 
     @Test
     public void testLoginWithValidCredentials() {
-        Product expectedProduct = new Product(itemName, itemDescription, itemPrice);
+        Product expectedProductFirst = new Product(firstItemName, firstItemDescription, firstItemPrice);
+        Product expectedProductSecond = new Product(secondItemName, secondItemDescription, secondItemPrice);
         LoginPage.login()
                 .validateLoginSuccess();
         AllItemsPage.initAllItemsPage()
                 .checkAllPageItemsAvailable()
-                .checkItemDetails(3, expectedProduct)
+                .checkItemDetails(3, expectedProductFirst)
                 .clickAddItemBtn(3, "Add to cart")
                 .checkItemAddedToBucket("1")
                 .checkRemoveItemBtn(3)
                 .clickOnBucketIcon()
-                .checkCartItem(itemName, itemDescription, itemPrice)
+                .checkCartItem(firstItemName, firstItemDescription, firstItemPrice)
                 .checkCartItemDescription()
                 .clickContinueShopingBtn()
-                .checkItemDetails(4, expectedProduct) //TODO need to fix
+                .checkItemDetails(4, expectedProductSecond)
                 .clickAddItemBtn(4, "Add to cart");
 
 
