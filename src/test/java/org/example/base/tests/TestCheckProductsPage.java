@@ -11,7 +11,8 @@ public class TestCheckProductsPage {
             " From American Apparel, 100% ringspun combed cotton, heather gray with red bolt.";
     String firstItemName = "Sauce Labs Bolt T-Shirt";
     String firstItemPrice = "$15.99";
-    String secondItemDescription = "It's not every day that you come across a midweight quarter-zip fleece jacket capable of handling everything from a relaxing day outdoors to a busy day at the office.";
+    String secondItemDescription = "It's not every day that you come across a midweight quarter-zip" +
+            " fleece jacket capable of handling everything from a relaxing day outdoors to a busy day at the office.";
     String secondItemName = "Sauce Labs Fleece Jacket";
     String secondItemPrice = "$49.99";
 
