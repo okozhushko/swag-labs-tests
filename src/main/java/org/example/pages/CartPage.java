@@ -1,34 +1,37 @@
 package org.example.pages;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.ElementsCollection;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class CartPage {
     String itemImageLik = "https://www.saucedemo.com/static/media/bolt-shirt-1200x1500.c2599ac5.jpg";
 
-    private final SelenideElement itemDescr = $(".inventory_item_desc");
-    private final SelenideElement itemName = $(".inventory_item_name");
-    private final SelenideElement itemPrice = $(".inventory_item_price");
-    private final SelenideElement itemImage = $(".inventory_details_img");
+    private final ElementsCollection itemDescr = $$(".inventory_item_desc");
+    private final ElementsCollection itemName = $$(".inventory_item_name");
+    private final ElementsCollection itemPrice = $$(".inventory_item_price");
+    private final ElementsCollection itemImage = $$(".inventory_details_img");
+
 
     public static CartPage initCartPage() {
         $(".title").shouldBe(Condition.visible).shouldHave(Condition.text("Your Cart"));
         return new CartPage();
     }
 
-    public CartPage checkCartItem(String name, String description, String price) {
+    public CartPage checkCartItem(int itemIndex, Product expectedProduct) {
         $(".cart_item").shouldBe(Condition.exist);
-        $(itemName).shouldBe(Condition.visible).shouldHave(Condition.text(name));
-        $(itemDescr).shouldBe(Condition.visible).shouldHave(Condition.text(description));
-        $(itemPrice).shouldBe(Condition.visible).shouldHave(Condition.text(price));
+        itemName.get(itemIndex - 1).shouldBe(Condition.visible).shouldHave(Condition.text(expectedProduct.getName()));
+        itemDescr.get(itemIndex - 1).shouldBe(Condition.visible).shouldHave(Condition.text(expectedProduct.getDescription()));
+        itemPrice.get(itemIndex - 1).shouldBe(Condition.visible).shouldHave(Condition.text(expectedProduct.getPrice()));
         $(".cart_button").shouldBe(Condition.visible).shouldHave(Condition.text("Remove"));
+
         return this;
     }
 
-    public CartPage checkCartItemDescription() {
-        $(itemName).click();
-        $(itemImage).shouldHave(Condition.attribute("src", itemImageLik));
+    public CartPage checkCartItemDescription(int item) {
+        itemName.get(item - 1).click();
+        itemImage.get(item-1).shouldHave(Condition.attribute("src", itemImageLik));
         return this;
     }
 

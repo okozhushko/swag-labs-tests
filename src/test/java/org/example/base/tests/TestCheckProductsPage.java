@@ -1,6 +1,9 @@
 package org.example.base.tests;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.example.pages.AllItemsPage;
+import org.example.pages.CartPage;
 import org.example.pages.LoginPage;
 import org.example.pages.Product;
 import org.testng.annotations.Test;
@@ -29,19 +32,15 @@ public class TestCheckProductsPage {
                 .checkItemAddedToBucket("1")
                 .checkRemoveItemBtn(3)
                 .clickOnBucketIcon()
-                .checkCartItem(firstItemName, firstItemDescription, firstItemPrice)
-                .checkCartItemDescription()
+                .checkCartItem(1,expectedProductFirst)
+                .checkCartItemDescription(1)
                 .clickContinueShopingBtn()
                 .checkItemDetails(4, expectedProductSecond)
                 .clickAddItemBtn(4, "Add to cart")
                 .checkItemAddedToBucket("2")
                 .checkRemoveItemBtn(3)
                 .clickOnBucketIcon()
-                .checkCartItem(secondItemName, secondItemDescription, secondItemPrice);//TODO Add switch case
-
-
-
-
+                .checkCartItem(2,expectedProductSecond);
 
         //.removeCartItem()
 
