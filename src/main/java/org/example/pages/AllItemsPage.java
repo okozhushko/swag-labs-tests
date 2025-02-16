@@ -108,7 +108,6 @@ public class AllItemsPage {
 
     public AllItemsPage sortBy(String sortOption) {
         sortDropdown.selectOption(sortOption);
-        Selenide.sleep(3000);
         return this;
     }
 
