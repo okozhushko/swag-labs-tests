@@ -76,11 +76,7 @@ public class TestCheckProductsPage {
                 .checkAndFillPostalCodeFld(postalCode)
                 .clickContinue()
                 .checkPrice(3, price, tax, total)
-                .clickFinishBtn();
-
-
-
-
-
+                .clickFinishBtn()
+                .checkCompleteOrderInfo();
     }
 }

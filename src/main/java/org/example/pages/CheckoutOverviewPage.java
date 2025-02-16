@@ -41,8 +41,8 @@ public class CheckoutOverviewPage {
     }
 
 
-    public CheckoutOverviewPage clickFinishBtn() {
+    public CheckoutCompletePage clickFinishBtn() {
         finishBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT).shouldHave(Condition.text("Finish")).click();
-        return this;
+        return CheckoutCompletePage.initCheckoutCompletePage();
     }
 }
