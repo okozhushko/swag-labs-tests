@@ -3,13 +3,16 @@ package org.example.pages;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.example.constants.DefaultDuration;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.$$x;
+import static org.assertj.core.api.Assertions.*;
 
 
 public class AllItemsPage {
@@ -21,8 +24,12 @@ public class AllItemsPage {
     private final ElementsCollection productPriceList = $$x("//div[@class='inventory_item_price']");
     private final ElementsCollection productDescriptionList = $$x("//div[@class='inventory_item_desc']");
     private final ElementsCollection addToCardBtnList = $$(".btn_inventory");
+    private ElementsCollection productNames = $$(".inventory_item_name");
+    private ElementsCollection productPrices = $$(".inventory_item_price");
 
-    SelenideElement menuIcon = $("#react-burger-menu-btn");
+    private SelenideElement menuIcon = $("#react-burger-menu-btn");
+    private SelenideElement sortDropdown = $(".product_sort_container");
+
 
 
     public static AllItemsPage initAllItemsPage() {
@@ -99,40 +106,51 @@ public class AllItemsPage {
         return this;
     }
 
+    public AllItemsPage sortBy(String sortOption) {
+        sortDropdown.selectOption(sortOption);
+        Selenide.sleep(3000);
+        return this;
+    }
 
-//    public AllItemsPage checkMenuItems(ProductItems productType) {
-//        String locator = "(//div[@class='inventory_item_name '])[%s]";
-//        switch (productType) {
-//            case SAUCE_LABS_BACKPACK -> {
-//                $$(String.format(locator, ProductItems.SAUCE_LABS_BACKPACK.getListIndex()))
-//                        .shouldHave(CollectionCondition.size(itemsSize), DefaultDuration.DEFAULT);
-//                break;
-//            }
-//            case SAUCE_LABS_BIKE_LIGHT -> {
-//                $$(String.format(locator, ProductItems.SAUCE_LABS_BIKE_LIGHT.getListIndex()))
-//                        .shouldHave(CollectionCondition.sizeGreaterThan(itemsSize));
-//                break;
-//            }
-//            case SAUCE_LABS_BOLT_SHIRT -> {
-//                $$(String.format(locator, ProductItems.SAUCE_LABS_BOLT_SHIRT.getListIndex()))
-//                        .shouldHave(CollectionCondition.sizeGreaterThan(itemsSize));
-//                break;
-//            }
-//            case SAUCE_LABS_FLEECE_JACKET -> {
-//                $$(String.format(locator, ProductItems.SAUCE_LABS_FLEECE_JACKET.getListIndex()))
-//                        .shouldHave(CollectionCondition.size(itemsSize), DefaultDuration.DEFAULT);
-//                break;
-//            }
-//            case SAUCE_LABS_ONESIE -> {
-//                $$(String.format(locator, ProductItems.SAUCE_LABS_ONESIE.getListIndex()))
-//                        .shouldHave(CollectionCondition.sizeGreaterThan(itemsSize));
-//                break;
-//            }
-//            case SAUCE_LABS__SHIRT -> {
-//                $$(String.format(locator, ProductItems.SAUCE_LABS__SHIRT.getListIndex()))
-//                        .shouldHave(CollectionCondition.sizeGreaterThan(itemsSize));
-//                break;
-//            }
-//            default -> throw new RuntimeException("Specified List items is wrong");
-//        }
+    public AllItemsPage verifySortingByNameAscending() {
+        List<String> actualNames = productNames.texts();
+        List<String> sortedNames = actualNames.stream().sorted().collect(Collectors.toList());
+
+        assertThat(actualNames).isEqualTo(sortedNames);
+        return this;
+    }
+
+    public AllItemsPage verifySortingByNameDescending() {
+        List<String> actualNames = productNames.texts();
+        List<String> sortedNames = actualNames.stream()
+                .sorted((a, b) -> b.compareTo(a))
+                .collect(Collectors.toList());
+
+        assertThat(actualNames).isEqualTo(sortedNames);
+        return this;
+    }
+
+    public AllItemsPage verifySortingByPriceLowToHigh() {
+        List<Double> actualPrices = productPrices.texts().stream()
+                .map(price -> Double.parseDouble(price.replace("$", "")))
+                .collect(Collectors.toList());
+
+        List<Double> sortedPrices = actualPrices.stream().sorted().collect(Collectors.toList());
+
+        assertThat(actualPrices).isEqualTo(sortedPrices);
+        return this;
+    }
+
+    public AllItemsPage verifySortingByPriceHighToLow() {
+        List<Double> actualPrices = productPrices.texts().stream()
+                .map(price -> Double.parseDouble(price.replace("$", "")))
+                .collect(Collectors.toList());
+
+        List<Double> sortedPrices = actualPrices.stream()
+                .sorted((a, b) -> Double.compare(b, a))
+                .collect(Collectors.toList());
+
+        assertThat(actualPrices).isEqualTo(sortedPrices);
+        return this;
+    }
 }
