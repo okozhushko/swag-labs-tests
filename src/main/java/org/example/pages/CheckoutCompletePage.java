@@ -13,6 +13,7 @@ public class CheckoutCompletePage {
     String backHomeBtnText = "Back Home";
     String successTitleText = "Thank you for your order!";
     String successMessageText = "Your order has been dispatched, and will arrive just as fast as the pony can get there!";
+    String footerText = "© 2025 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy";
     String twitterLink = "https://twitter.com/saucelabs";
     String facebookLink = "https://www.facebook.com/saucelabs";
     String linkedinLink = "https://www.linkedin.com/company/sauce-labs/";
@@ -21,6 +22,7 @@ public class CheckoutCompletePage {
     private final SelenideElement successTitle = $(".complete-header");
     private final SelenideElement successMessage = $(".complete-text");
     private final SelenideElement backHomeBtn = $("#back-to-products");
+    private final SelenideElement footerInfo = $(".footer_copy");
 
     ElementsCollection socialIndex = $$(".social li a");
 
@@ -42,6 +44,11 @@ public class CheckoutCompletePage {
     public CheckoutCompletePage clickBackHomeBtn() {
         backHomeBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(backHomeBtnText));
+        return this;
+    }
+    public CheckoutCompletePage checkFooterInfo() {
+        footerInfo.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.text(footerText));
         return this;
     }
 

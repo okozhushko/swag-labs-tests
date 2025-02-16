@@ -87,6 +87,7 @@ public class TestCheckProductsPage {
                 .checkFooterSocialLinks(1, "TWITTER")
                 .checkFooterSocialLinks(2, "FACEBOOK")
                 .checkFooterSocialLinks(3, "LINKEDIN")
+                .checkFooterInfo()
                 .clickBackHomeBtn();
     }
 }
