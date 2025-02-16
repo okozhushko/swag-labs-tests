@@ -1,19 +1,28 @@
 package org.example.pages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import org.example.constants.DefaultDuration;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class CheckoutCompletePage {
     String backHomeBtnText = "Back Home";
     String successTitleText = "Thank you for your order!";
     String successMessageText = "Your order has been dispatched, and will arrive just as fast as the pony can get there!";
+    String twitterLink = "https://twitter.com/saucelabs";
+    String facebookLink = "https://www.facebook.com/saucelabs";
+    String linkedinLink = "https://www.linkedin.com/company/sauce-labs/";
 
     private final SelenideElement successIcon = $(".pony_express");
     private final SelenideElement successTitle = $(".complete-header");
     private final SelenideElement successMessage = $(".complete-text");
     private final SelenideElement backHomeBtn = $("#back-to-products");
+
+    ElementsCollection socialIndex = $$(".social li a");
 
 
     public static CheckoutCompletePage initCheckoutCompletePage() {
@@ -36,9 +45,40 @@ public class CheckoutCompletePage {
         return this;
     }
 
-    public CheckoutCompletePage checkFooterSocialLinks() {
-
+    public CheckoutCompletePage checkFooterSocialLinks(int linkIndex, String socialLink) {
+        switch (socialLink) {
+            case "TWITTER":
+                socialIndex.get(linkIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.attribute("href", twitterLink))
+                        .click();
+                CheckoutCompletePage.checkUserRedirected("https://x.com/saucelabs?mx=2");
+                break;
+            case "FACEBOOK":
+                socialIndex.get(linkIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                        .shouldHave(Condition.attribute("href", facebookLink))
+                        .click();
+                CheckoutCompletePage.checkUserRedirected("https://www.facebook.com/saucelabs");
+                break;
+            case "LINKEDIN":
+                socialIndex.get(linkIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                        .shouldHave(Condition.attribute("href", linkedinLink))
+                        .click();
+                CheckoutCompletePage.checkUserRedirected("https://www.linkedin.com/company/sauce-labs/");
+                break;
+        }
         return this;
+    }
+
+    public static CheckoutCompletePage checkUserRedirected(String link) {
+            String currentWindow = WebDriverRunner.getWebDriver().getWindowHandle();
+            Selenide.switchTo().window(1);
+            String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
+            if (!currentUrl.equals(link)) {
+                throw new AssertionError("Expected URL to be " + link + " but found " + currentUrl);
+            }
+            WebDriverRunner.getWebDriver().close();
+            Selenide.switchTo().window(currentWindow);
+        return new CheckoutCompletePage();
     }
 }
 

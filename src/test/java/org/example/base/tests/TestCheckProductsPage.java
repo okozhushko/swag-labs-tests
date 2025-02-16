@@ -18,7 +18,8 @@ public class TestCheckProductsPage {
     String secondItemName = "Sauce Labs Fleece Jacket";
     String secondItemPrice = "$49.99";
     String addToCartText = "Add to cart";
-    String emptyValue = StringUtils.EMPTY;;
+    String emptyValue = StringUtils.EMPTY;
+    ;
     String firstNameErrorMsg = "First Name is required";
     String lastNameErrorMsg = "Last Name is required";
     String postalCodeErrorMsg = "Postal Code is required";
@@ -31,6 +32,9 @@ public class TestCheckProductsPage {
         String firstName = Faker.getRandomFirstName();
         String lastName = Faker.getRandomLastName();
         String postalCode = String.valueOf(Faker.getRandomNumber(10000, 99999));
+        String twitterLink = "https://x.com/saucelabs?mx=2";
+        String facebookLink = "https://www.facebook.com/saucelabs";
+        String linkedinLink = "https://www.linkedin.com/company/sauce-labs/";
 
         Product expectedProductFirst = new Product(firstItemName, firstItemDescription, firstItemPrice);
         Product expectedProductSecond = new Product(secondItemName, secondItemDescription, secondItemPrice);
@@ -83,7 +87,9 @@ public class TestCheckProductsPage {
                 .checkPrice(3, price, tax, total)
                 .clickFinishBtn()
                 .checkCompleteOrderInfo()
-                .checkFooterSocialLinks()
+                .checkFooterSocialLinks(1, "TWITTER")
+                .checkFooterSocialLinks(2, "FACEBOOK")
+                .checkFooterSocialLinks(3, "LINKEDIN")
                 .clickBackHomeBtn();
     }
 }
