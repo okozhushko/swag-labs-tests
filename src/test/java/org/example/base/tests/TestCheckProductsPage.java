@@ -3,6 +3,7 @@ package org.example.base.tests;
 import org.apache.commons.lang3.StringUtils;
 import org.example.helpers.Randomizer;
 import org.example.pages.AllItemsPage;
+import org.example.pages.CheckoutOverviewPage;
 import org.example.pages.LoginPage;
 import org.example.pages.Product;
 import org.testng.annotations.Test;
@@ -73,6 +74,9 @@ public class TestCheckProductsPage {
                 .checkAndFillLastNameFld(lastName)
                 .checkAndFillPostalCodeFld(postalCode)
                 .clickContinueBtn();
+        CheckoutOverviewPage.initCheckoutOverviewPage()
+                .checkShipmentInfo(1,"Payment Information:","SauceCard #31337")
+                .checkShipmentInfo(2,"Shipping Information:","Free Pony Express Delivery!");
 
 
 
