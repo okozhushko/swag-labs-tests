@@ -19,9 +19,9 @@ public class TestCheckProductsPage {
     String secondItemPrice = "$49.99";
     String addToCartText = "Add to cart";
     String emptyValue = StringUtils.EMPTY;;
-    String firstNameErrorMsg = "Error: First Name is required";
-    String lastNameErrorMsg = "Error: Last Name is required";
-    String postalCodeErrorMsg = "Error: Postal Code is required";
+    String firstNameErrorMsg = "First Name is required";
+    String lastNameErrorMsg = "Last Name is required";
+    String postalCodeErrorMsg = "Postal Code is required";
     String price = "65.98";
     String tax = "5.28";
     String total = "71.26";

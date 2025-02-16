@@ -58,6 +58,7 @@ public class CheckoutInfoPage {
                 .click();
         return this;
     }
+
     public CheckoutOverviewPage clickContinue() {
         continueButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.value("Continue"))
@@ -67,12 +68,12 @@ public class CheckoutInfoPage {
 
     public CheckoutInfoPage checkValidationMsg(String message) {
         errorMessage.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text(message));
+                .shouldHave(Condition.text("Error: " + message));
         return this;
     }
 
     public CheckoutInfoPage clickCloseError() {
-        $(".error-button").shouldBe(Condition.visible,DefaultDuration.DEFAULT).click();
+        $(".error-button").shouldBe(Condition.visible, DefaultDuration.DEFAULT).click();
         return this;
     }
 
