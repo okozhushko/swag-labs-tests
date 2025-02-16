@@ -38,6 +38,7 @@ public class TestCheckProductsPage {
                 .validateLoginSuccess();
         AllItemsPage.initAllItemsPage()
                 .checkAllPageItemsAvailable()
+                .clickAndCheckMenuItems()
                 .checkItemDetails(3, expectedProductFirst)
                 .clickAddItemBtn(3, addToCartText)
                 .checkItemAddedToBucket("1")

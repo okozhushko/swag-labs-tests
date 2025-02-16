@@ -22,6 +22,8 @@ public class AllItemsPage {
     private final ElementsCollection productDescriptionList = $$x("//div[@class='inventory_item_desc']");
     private final ElementsCollection addToCardBtnList = $$(".btn_inventory");
 
+    SelenideElement menuIcon = $("#react-burger-menu-btn");
+
 
     public static AllItemsPage initAllItemsPage() {
         $(".title").shouldBe(Condition.visible).shouldHave(Condition.text("Products"));
@@ -59,10 +61,11 @@ public class AllItemsPage {
     }
 
     public AllItemsPage checkItemAddedToBucket(String value) {
-        $(".shopping_cart_badge").shouldBe(Condition.visible,DefaultDuration.DEFAULT)
+        $(".shopping_cart_badge").shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(value));
         return this;
     }
+
     public AllItemsPage checkRemoveItemBtn(int btnIndex) {
         addToCardBtnList.get(btnIndex - 1)
                 .shouldBe(Condition.visible)
@@ -72,16 +75,27 @@ public class AllItemsPage {
 
     public CartPage clickOnBucketIcon() {
         $("#shopping_cart_container .shopping_cart_link")
-                .shouldBe(Condition.visible,DefaultDuration.DEFAULT)
+                .shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .click();
         return CartPage.initCartPage();
 
     }
 
     public AllItemsPage clickAddItemBtn(int itemIndex, String btnName) {
-        addToCardBtnList.get(itemIndex - 1).shouldBe(Condition.visible,DefaultDuration.DEFAULT)
+        addToCardBtnList.get(itemIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(btnName))
                 .click();
+        return this;
+    }
+
+    public AllItemsPage clickAndCheckMenuItems() {
+        menuIcon.shouldBe(Condition.visible, DefaultDuration.DEFAULT).click();
+        List<String> listOfMenuItemLabels =
+                Arrays.asList("All Items", "About", "Logout", "Reset App State");
+
+        $(".bm-item-list").$$(".menu-item")
+                .shouldHave(CollectionCondition.size(listOfMenuItemLabels.size()))
+                .shouldHave(CollectionCondition.exactTexts(listOfMenuItemLabels));
         return this;
     }
 
