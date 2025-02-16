@@ -3,7 +3,6 @@ package org.example.pages;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import java.util.Arrays;
 import java.util.List;
@@ -17,8 +16,9 @@ import static org.assertj.core.api.Assertions.*;
 
 public class AllItemsPage {
     private static final int itemsSize = 0;
+    String removeBtnText = "Remove";
+    String addToCartBtnText = "Add to cart";
 
-    //private final SelenideElement loginPageTitle = $(".inventory_item");
     private final ElementsCollection productsList = $$(".inventory_item");
     private final ElementsCollection productNamesList = $$x("//div[@class='inventory_item_name ']");
     private final ElementsCollection productPriceList = $$x("//div[@class='inventory_item_price']");
@@ -29,7 +29,6 @@ public class AllItemsPage {
 
     private SelenideElement menuIcon = $("#react-burger-menu-btn");
     private SelenideElement sortDropdown = $(".product_sort_container");
-
 
 
     public static AllItemsPage initAllItemsPage() {
@@ -50,7 +49,7 @@ public class AllItemsPage {
     public AllItemsPage clickAddToCartButton(int btnIndex) {
         addToCardBtnList.get(btnIndex - 1)
                 .shouldBe(Condition.visible)
-                .shouldHave(Condition.text("Add to cart"))
+                .shouldHave(Condition.text(addToCartBtnText))
                 .click();
         return this;
     }
@@ -76,7 +75,7 @@ public class AllItemsPage {
     public AllItemsPage checkRemoveItemBtn(int btnIndex) {
         addToCardBtnList.get(btnIndex - 1)
                 .shouldBe(Condition.visible)
-                .shouldHave(Condition.text("Remove"));
+                .shouldHave(Condition.text(removeBtnText));
         return this;
     }
 

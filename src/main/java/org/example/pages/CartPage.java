@@ -9,6 +9,8 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class CartPage {
     String itemImageLik = "https://www.saucedemo.com/static/media/bolt-shirt-1200x1500.c2599ac5.jpg";
+    String checkOutBtnText = "Checkout";
+    String removeBtnText = "Remove";
 
     private final ElementsCollection itemDescr = $$(".inventory_item_desc");
     private final ElementsCollection itemName = $$(".inventory_item_name");
@@ -27,7 +29,7 @@ public class CartPage {
         itemName.get(itemIndex - 1).shouldBe(Condition.visible).shouldHave(Condition.text(expectedProduct.getName()));
         itemDescr.get(itemIndex - 1).shouldBe(Condition.visible).shouldHave(Condition.text(expectedProduct.getDescription()));
         itemPrice.get(itemIndex - 1).shouldBe(Condition.visible).shouldHave(Condition.text(expectedProduct.getPrice()));
-        $(".cart_button").shouldBe(Condition.visible).shouldHave(Condition.text("Remove"));
+        $(".cart_button").shouldBe(Condition.visible).shouldHave(Condition.text(removeBtnText));
         return this;
     }
 
@@ -39,7 +41,7 @@ public class CartPage {
 
     public CheckoutInfoPage clickCheckoutBtn() {
         checkoutBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text("Checkout"))
+                .shouldHave(Condition.text(checkOutBtnText))
                 .click();
         return CheckoutInfoPage.initCheckoutPage();
     }

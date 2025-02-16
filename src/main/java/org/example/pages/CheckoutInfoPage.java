@@ -8,13 +8,17 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class CheckoutInfoPage {
+    String continueBtnText = "Continue";
+    String checkoutBtnText = "Checkout";
 
-    SelenideElement firstNameFld = $("#first-name");
-    SelenideElement lastNameFld = $("#last-name");
-    SelenideElement postalCodeNameFld = $("#postal-code");
-    SelenideElement checkoutButton = $("#checkout");
-    SelenideElement continueButton = $("#continue");
-    SelenideElement errorMessage = $x("//h3[@data-test='error']");
+    private final SelenideElement firstNameFld = $("#first-name");
+    private final SelenideElement lastNameFld = $("#last-name");
+    private final SelenideElement postalCodeNameFld = $("#postal-code");
+    private final SelenideElement checkoutButton = $("#checkout");
+    private final SelenideElement continueButton = $("#continue");
+    private final SelenideElement errorMessage = $x("//h3[@data-test='error']");
+
+
 
     public static CheckoutInfoPage initCheckoutPage() {
         $(".title").shouldBe(Condition.visible).shouldHave(Condition.text("Checkout: Your Information"));
@@ -47,21 +51,21 @@ public class CheckoutInfoPage {
 
     public CheckoutInfoPage clickCheckoutBtn() {
         checkoutButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.value("Checkout"))
+                .shouldHave(Condition.value(checkoutBtnText))
                 .click();
         return this;
     }
 
     public CheckoutInfoPage clickContinueBtn() {
         continueButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.value("Continue"))
+                .shouldHave(Condition.value(continueBtnText))
                 .click();
         return this;
     }
 
     public CheckoutOverviewPage clickContinue() {
         continueButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.value("Continue"))
+                .shouldHave(Condition.value(continueBtnText))
                 .click();
         return CheckoutOverviewPage.initCheckoutOverviewPage();
     }

@@ -8,14 +8,15 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class CheckoutOverviewPage {
+    String finishBtnText = "Finish";
 
     ElementsCollection labelList = $$(".summary_info_label");
     ElementsCollection fieldList = $$(".summary_value_label");
 
-    SelenideElement finishBtn = $("#finish");
-    SelenideElement itemTotalLbl = $(".summary_subtotal_label");
-    SelenideElement itemTaxLbl = $(".summary_tax_label");
-    SelenideElement itemFullTotalLbl = $(".summary_total_label");
+    private final  SelenideElement finishBtn = $("#finish");
+    private final  SelenideElement itemTotalLbl = $(".summary_subtotal_label");
+    private final  SelenideElement itemTaxLbl = $(".summary_tax_label");
+    private final  SelenideElement itemFullTotalLbl = $(".summary_total_label");
 
     public static CheckoutOverviewPage initCheckoutOverviewPage() {
         $(".title").shouldBe(Condition.visible).shouldHave(Condition.text("Checkout: Overview"));
@@ -42,7 +43,7 @@ public class CheckoutOverviewPage {
 
 
     public CheckoutCompletePage clickFinishBtn() {
-        finishBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT).shouldHave(Condition.text("Finish")).click();
+        finishBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT).shouldHave(Condition.text(finishBtnText)).click();
         return CheckoutCompletePage.initCheckoutCompletePage();
     }
 }

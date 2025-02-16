@@ -83,6 +83,7 @@ public class TestCheckProductsPage {
                 .checkPrice(3, price, tax, total)
                 .clickFinishBtn()
                 .checkCompleteOrderInfo()
+                .checkFooterSocialLinks()
                 .clickBackHomeBtn();
     }
 }

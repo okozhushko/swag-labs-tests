@@ -16,6 +16,8 @@ public class LoginPage {
             errorMessage = $("h3[data-test='error']");
     private static boolean isLoggedIn = false;
 
+    static String errorMessageText = "Epic sadface: Username and password do not match any user in this service";
+
     private LoginPage() {
     }
 
@@ -45,7 +47,7 @@ public class LoginPage {
                 .fillUserData(username, password)
                 .clickLoginButton();
 
-        $("h3[data-test='error']").shouldBe(Condition.visible).shouldHave(Condition.text("Epic sadface: Username and password do not match any user in this service"));
+        $("h3[data-test='error']").shouldBe(Condition.visible).shouldHave(Condition.text(errorMessageText));
 
         return new LoginPage();
     }
@@ -62,14 +64,12 @@ public class LoginPage {
     }
 
     public LoginPage validateErrorMessage() {
-        errorMessage.shouldBe(Condition.visible).shouldHave(Condition.text("Epic sadface: Username and password do not match any user in this service"));
+        errorMessage.shouldBe(Condition.visible).shouldHave(Condition.text(errorMessageText));
         return this;
     }
 
     public LoginPage validateLoginSuccess() {
         productsTitle.shouldBe(Condition.visible).shouldHave(Condition.text("Products"));
         return this;
-
-
     }
 }

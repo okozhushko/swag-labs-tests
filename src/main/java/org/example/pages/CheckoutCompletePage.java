@@ -6,13 +6,14 @@ import org.example.constants.DefaultDuration;
 import static com.codeborne.selenide.Selenide.$;
 
 public class CheckoutCompletePage {
+    String backHomeBtnText = "Back Home";
     String successTitleText = "Thank you for your order!";
     String successMessageText = "Your order has been dispatched, and will arrive just as fast as the pony can get there!";
 
-    SelenideElement successIcon = $(".pony_express");
-    SelenideElement successTitle = $(".complete-header");
-    SelenideElement successMessage = $(".complete-text");
-    SelenideElement backHomeBtn = $("#back-to-products");
+    private final SelenideElement successIcon = $(".pony_express");
+    private final SelenideElement successTitle = $(".complete-header");
+    private final SelenideElement successMessage = $(".complete-text");
+    private final SelenideElement backHomeBtn = $("#back-to-products");
 
 
     public static CheckoutCompletePage initCheckoutCompletePage() {
@@ -31,7 +32,12 @@ public class CheckoutCompletePage {
 
     public CheckoutCompletePage clickBackHomeBtn() {
         backHomeBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text("Back Home"));
+                .shouldHave(Condition.text(backHomeBtnText));
+        return this;
+    }
+
+    public CheckoutCompletePage checkFooterSocialLinks() {
+
         return this;
     }
 }
