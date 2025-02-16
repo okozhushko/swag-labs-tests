@@ -2,6 +2,8 @@ package org.example.pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
+import com.codeborne.selenide.SelenideElement;
+import org.example.constants.DefaultDuration;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -12,6 +14,7 @@ public class CartPage {
     private final ElementsCollection itemName = $$(".inventory_item_name");
     private final ElementsCollection itemPrice = $$(".inventory_item_price");
     private final ElementsCollection itemImage = $$(".inventory_details_img");
+    private final SelenideElement checkoutBtn = $("#checkout");
 
 
     public static CartPage initCartPage() {
@@ -25,17 +28,23 @@ public class CartPage {
         itemDescr.get(itemIndex - 1).shouldBe(Condition.visible).shouldHave(Condition.text(expectedProduct.getDescription()));
         itemPrice.get(itemIndex - 1).shouldBe(Condition.visible).shouldHave(Condition.text(expectedProduct.getPrice()));
         $(".cart_button").shouldBe(Condition.visible).shouldHave(Condition.text("Remove"));
-
         return this;
     }
 
     public CartPage checkCartItemDescription(int item) {
         itemName.get(item - 1).click();
-        itemImage.get(item-1).shouldHave(Condition.attribute("src", itemImageLik));
+        itemImage.get(item - 1).shouldHave(Condition.attribute("src", itemImageLik));
         return this;
     }
 
-    public AllItemsPage clickContinueShopingBtn() {
+    public CheckoutPage clickCheckoutBtn() {
+        checkoutBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.text("Checkout"))
+                .click();
+        return CheckoutPage.initCheckoutPage();
+    }
+
+    public AllItemsPage clickContinueShoppingBtn() {
         $("#back-to-products").shouldBe(Condition.visible).shouldHave(Condition.text("Back to products"))
                 .click();
         return AllItemsPage.initAllItemsPage();

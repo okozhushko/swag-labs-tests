@@ -1,9 +1,7 @@
 package org.example.base.tests;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 import org.example.pages.AllItemsPage;
-import org.example.pages.CartPage;
 import org.example.pages.LoginPage;
 import org.example.pages.Product;
 import org.testng.annotations.Test;
@@ -19,6 +17,11 @@ public class TestCheckProductsPage {
     String secondItemName = "Sauce Labs Fleece Jacket";
     String secondItemPrice = "$49.99";
     String addToCartText = "Add to cart";
+    String emptyValue = StringUtils.EMPTY;
+    ;
+    String firstNameErrorMsg = "Error: First Name is required";
+    String lastNameErrorMsg = "Error: Last Name is required";
+    String postalCodeErrorMsg = "Error: Postal Code is required";
 
     @Test
     public void testLoginWithValidCredentials() {
@@ -35,15 +38,19 @@ public class TestCheckProductsPage {
                 .clickOnBucketIcon()
                 .checkCartItem(1, expectedProductFirst)
                 .checkCartItemDescription(1)
-                .clickContinueShopingBtn()
+                .clickContinueShoppingBtn()
                 .checkItemDetails(4, expectedProductSecond)
                 .clickAddItemBtn(4, addToCartText)
                 .checkItemAddedToBucket("2")
                 .checkRemoveItemBtn(3)
                 .clickOnBucketIcon()
-                .checkCartItem(2, expectedProductSecond);
+                .checkCartItem(2, expectedProductSecond)
+                .clickCheckoutBtn()
 
-        //.removeCartItem()
+                .checkAndFillFirstNameFld(emptyValue)
+                .checkAndFillLastNameFld("Doe")
+                .checkAndFillPostalCodeFld("696969");
+
 
     }
 }
