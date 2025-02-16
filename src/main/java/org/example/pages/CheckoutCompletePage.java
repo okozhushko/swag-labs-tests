@@ -47,24 +47,24 @@ public class CheckoutCompletePage {
 
     public CheckoutCompletePage checkFooterSocialLinks(int linkIndex, String socialLink) {
         switch (socialLink) {
-            case "TWITTER":
+            case "TWITTER" -> {
                 socialIndex.get(linkIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.attribute("href", twitterLink))
+                        .shouldHave(Condition.attribute("href", twitterLink))
                         .click();
                 CheckoutCompletePage.checkUserRedirected("https://x.com/saucelabs?mx=2");
-                break;
-            case "FACEBOOK":
+            }
+            case "FACEBOOK" -> {
                 socialIndex.get(linkIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                         .shouldHave(Condition.attribute("href", facebookLink))
                         .click();
                 CheckoutCompletePage.checkUserRedirected("https://www.facebook.com/saucelabs");
-                break;
-            case "LINKEDIN":
+            }
+            case "LINKEDIN" -> {
                 socialIndex.get(linkIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                         .shouldHave(Condition.attribute("href", linkedinLink))
                         .click();
                 CheckoutCompletePage.checkUserRedirected("https://www.linkedin.com/company/sauce-labs/");
-                break;
+            }
         }
         return this;
     }
