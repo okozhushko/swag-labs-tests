@@ -7,7 +7,7 @@ import org.example.constants.DefaultDuration;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
-public class CheckoutPage {
+public class CheckoutInfoPage {
 
     SelenideElement firstNameFld = $("#first-name");
     SelenideElement lastNameFld = $("#last-name");
@@ -16,12 +16,12 @@ public class CheckoutPage {
     SelenideElement continueButton = $("#continue");
     SelenideElement errorMessage = $x("//h3[@data-test='error']");
 
-    public static CheckoutPage initCheckoutPage() {
+    public static CheckoutInfoPage initCheckoutPage() {
         $(".title").shouldBe(Condition.visible).shouldHave(Condition.text("Checkout: Your Information"));
-        return new CheckoutPage();
+        return new CheckoutInfoPage();
     }
 
-    public CheckoutPage checkAndFillFirstNameFld(String firstName) {
+    public CheckoutInfoPage checkAndFillFirstNameFld(String firstName) {
         firstNameFld.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.attribute("placeholder", "First Name"));
         ClearSelectedText.clearValueStepByStep(firstNameFld);
@@ -29,7 +29,7 @@ public class CheckoutPage {
         return this;
     }
 
-    public CheckoutPage checkAndFillLastNameFld(String lastName) {
+    public CheckoutInfoPage checkAndFillLastNameFld(String lastName) {
         lastNameFld.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.attribute("placeholder", "Last Name"));
         ClearSelectedText.clearValueStepByStep(lastNameFld);
@@ -37,7 +37,7 @@ public class CheckoutPage {
         return this;
     }
 
-    public CheckoutPage checkAndFillPostalCodeFld(String postalCode) {
+    public CheckoutInfoPage checkAndFillPostalCodeFld(String postalCode) {
         postalCodeNameFld.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.attribute("placeholder", "Zip/Postal Code"));
         ClearSelectedText.clearValueStepByStep(postalCodeNameFld);
@@ -45,28 +45,29 @@ public class CheckoutPage {
         return this;
     }
 
-    public CheckoutPage clickCheckoutBtn() {
+    public CheckoutInfoPage clickCheckoutBtn() {
         checkoutButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.value("Checkout"))
                 .click();
         return this;
     }
 
-    public CheckoutPage clickContinueBtn() {
+    public CheckoutInfoPage clickContinueBtn() {
         continueButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.value("Continue"))
                 .click();
         return this;
     }
 
-    public CheckoutPage checkValidationMsg(String message) {
+    public CheckoutInfoPage checkValidationMsg(String message) {
         errorMessage.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(message));
         return this;
     }
 
-    public CheckoutPage clickCloseError() {
+    public CheckoutInfoPage clickCloseError() {
         $(".error-button").shouldBe(Condition.visible,DefaultDuration.DEFAULT).click();
         return this;
     }
+
 }

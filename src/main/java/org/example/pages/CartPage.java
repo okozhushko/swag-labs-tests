@@ -37,11 +37,11 @@ public class CartPage {
         return this;
     }
 
-    public CheckoutPage clickCheckoutBtn() {
+    public CheckoutInfoPage clickCheckoutBtn() {
         checkoutBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text("Checkout"))
                 .click();
-        return CheckoutPage.initCheckoutPage();
+        return CheckoutInfoPage.initCheckoutPage();
     }
 
     public AllItemsPage clickContinueShoppingBtn() {

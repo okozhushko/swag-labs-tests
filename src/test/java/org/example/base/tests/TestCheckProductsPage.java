@@ -68,7 +68,15 @@ public class TestCheckProductsPage {
                 .checkAndFillPostalCodeFld(emptyValue)
                 .clickContinueBtn()
                 .checkValidationMsg(postalCodeErrorMsg)
-                .clickCloseError();
+                .clickCloseError()
+                .checkAndFillFirstNameFld(firstName)
+                .checkAndFillLastNameFld(lastName)
+                .checkAndFillPostalCodeFld(postalCode)
+                .clickContinueBtn();
+
+
+
+
 
     }
 }
