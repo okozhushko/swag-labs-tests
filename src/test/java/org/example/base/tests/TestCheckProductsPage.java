@@ -1,9 +1,8 @@
 package org.example.base.tests;
 
 import org.apache.commons.lang3.StringUtils;
-import org.example.helpers.Randomizer;
+import org.example.helpers.Faker;
 import org.example.pages.AllItemsPage;
-import org.example.pages.CheckoutOverviewPage;
 import org.example.pages.LoginPage;
 import org.example.pages.Product;
 import org.testng.annotations.Test;
@@ -27,9 +26,9 @@ public class TestCheckProductsPage {
 
     @Test
     public void testLoginWithValidCredentials() {
-        String firstName = Randomizer.getRandomFirstName();
-        String lastName = Randomizer.getRandomLastName();
-        String postalCode = String.valueOf(Randomizer.getRandomNumber(10000, 99999));
+        String firstName = Faker.getRandomFirstName();
+        String lastName = Faker.getRandomLastName();
+        String postalCode = String.valueOf(Faker.getRandomNumber(10000, 99999));
 
         Product expectedProductFirst = new Product(firstItemName, firstItemDescription, firstItemPrice);
         Product expectedProductSecond = new Product(secondItemName, secondItemDescription, secondItemPrice);
@@ -73,10 +72,11 @@ public class TestCheckProductsPage {
                 .checkAndFillFirstNameFld(firstName)
                 .checkAndFillLastNameFld(lastName)
                 .checkAndFillPostalCodeFld(postalCode)
-                .clickContinueBtn();
-        CheckoutOverviewPage.initCheckoutOverviewPage()
+                .clickContinue()
                 .checkShipmentInfo(1,"Payment Information:","SauceCard #31337")
-                .checkShipmentInfo(2,"Shipping Information:","Free Pony Express Delivery!");
+                .checkShipmentInfo(2,"Shipping Information:","Free Pony Express Delivery!")
+                .checkPrice(3, "$65.98","$5.28", "$71.26" )
+                .clickFinishBtn();
 
 
 

@@ -58,6 +58,12 @@ public class CheckoutInfoPage {
                 .click();
         return this;
     }
+    public CheckoutOverviewPage clickContinue() {
+        continueButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.value("Continue"))
+                .click();
+        return CheckoutOverviewPage.initCheckoutOverviewPage();
+    }
 
     public CheckoutInfoPage checkValidationMsg(String message) {
         errorMessage.shouldBe(Condition.visible, DefaultDuration.DEFAULT)

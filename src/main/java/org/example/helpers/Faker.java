@@ -1,9 +1,7 @@
 package org.example.helpers;
 
-import com.github.javafaker.Faker;
-
-public class Randomizer {
-    private static final Faker faker = new Faker();
+public class Faker {
+    private static final com.github.javafaker.Faker faker = new com.github.javafaker.Faker();
 
     public static String getRandomFirstName() {
         return faker.name().firstName();
