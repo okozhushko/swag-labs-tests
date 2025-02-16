@@ -13,6 +13,7 @@ public class CheckoutPage {
     SelenideElement lastNameFld = $("#last-name");
     SelenideElement postalCodeNameFld = $("#postal-code");
     SelenideElement checkoutButton = $("#checkout");
+    SelenideElement continueButton = $("#continue");
     SelenideElement errorMessage = $x("//h3[@data-test='error']");
 
     public static CheckoutPage initCheckoutPage() {
@@ -21,31 +22,38 @@ public class CheckoutPage {
     }
 
     public CheckoutPage checkAndFillFirstNameFld(String firstName) {
-        firstNameFld.shouldBe(Condition.visible)
+        firstNameFld.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.attribute("placeholder", "First Name"));
-        ClearSelectedText.jsClear(firstNameFld);
+        ClearSelectedText.clearValueStepByStep(firstNameFld);
         firstNameFld.val(firstName);
         return this;
     }
 
     public CheckoutPage checkAndFillLastNameFld(String lastName) {
-        lastNameFld.shouldBe(Condition.visible)
+        lastNameFld.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.attribute("placeholder", "Last Name"));
-        ClearSelectedText.jsClear(lastNameFld);
+        ClearSelectedText.clearValueStepByStep(lastNameFld);
         lastNameFld.val(lastName);
         return this;
     }
 
     public CheckoutPage checkAndFillPostalCodeFld(String postalCode) {
-        postalCodeNameFld.shouldBe(Condition.visible)
+        postalCodeNameFld.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.attribute("placeholder", "Zip/Postal Code"));
-        ClearSelectedText.jsClear(postalCodeNameFld);
+        ClearSelectedText.clearValueStepByStep(postalCodeNameFld);
         postalCodeNameFld.val(postalCode);
         return this;
     }
 
     public CheckoutPage clickCheckoutBtn() {
         checkoutButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.value("Checkout"))
+                .click();
+        return this;
+    }
+
+    public CheckoutPage clickContinueBtn() {
+        continueButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.value("Continue"))
                 .click();
         return this;

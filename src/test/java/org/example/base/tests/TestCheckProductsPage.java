@@ -1,6 +1,7 @@
 package org.example.base.tests;
 
 import org.apache.commons.lang3.StringUtils;
+import org.example.helpers.Randomizer;
 import org.example.pages.AllItemsPage;
 import org.example.pages.LoginPage;
 import org.example.pages.Product;
@@ -25,6 +26,10 @@ public class TestCheckProductsPage {
 
     @Test
     public void testLoginWithValidCredentials() {
+        String firstName = Randomizer.getRandomFirstName();
+        String lastName = Randomizer.getRandomLastName();
+        String postalCode = String.valueOf(Randomizer.getRandomNumber(10000, 99999));
+
         Product expectedProductFirst = new Product(firstItemName, firstItemDescription, firstItemPrice);
         Product expectedProductSecond = new Product(secondItemName, secondItemDescription, secondItemPrice);
         LoginPage.login()
@@ -46,11 +51,24 @@ public class TestCheckProductsPage {
                 .clickOnBucketIcon()
                 .checkCartItem(2, expectedProductSecond)
                 .clickCheckoutBtn()
-
                 .checkAndFillFirstNameFld(emptyValue)
-                .checkAndFillLastNameFld("Doe")
-                .checkAndFillPostalCodeFld("696969");
-
+                .checkAndFillLastNameFld(firstName)
+                .checkAndFillPostalCodeFld(postalCode)
+                .clickContinueBtn()
+                .checkValidationMsg(firstNameErrorMsg)
+                .clickCloseError()
+                .checkAndFillFirstNameFld(firstName)
+                .checkAndFillLastNameFld(emptyValue)
+                .checkAndFillPostalCodeFld(postalCode)
+                .clickContinueBtn()
+                .checkValidationMsg(lastNameErrorMsg)
+                .clickCloseError()
+                .checkAndFillFirstNameFld(firstName)
+                .checkAndFillLastNameFld(lastName)
+                .checkAndFillPostalCodeFld(emptyValue)
+                .clickContinueBtn()
+                .checkValidationMsg(postalCodeErrorMsg)
+                .clickCloseError();
 
     }
 }
