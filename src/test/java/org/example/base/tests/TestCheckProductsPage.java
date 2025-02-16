@@ -32,9 +32,6 @@ public class TestCheckProductsPage {
         String firstName = Faker.getRandomFirstName();
         String lastName = Faker.getRandomLastName();
         String postalCode = String.valueOf(Faker.getRandomNumber(10000, 99999));
-        String twitterLink = "https://x.com/saucelabs?mx=2";
-        String facebookLink = "https://www.facebook.com/saucelabs";
-        String linkedinLink = "https://www.linkedin.com/company/sauce-labs/";
 
         Product expectedProductFirst = new Product(firstItemName, firstItemDescription, firstItemPrice);
         Product expectedProductSecond = new Product(secondItemName, secondItemDescription, secondItemPrice);
