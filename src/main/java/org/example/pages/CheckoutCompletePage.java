@@ -12,6 +12,7 @@ public class CheckoutCompletePage {
     SelenideElement successIcon = $(".pony_express");
     SelenideElement successTitle = $(".complete-header");
     SelenideElement successMessage = $(".complete-text");
+    SelenideElement backHomeBtn = $("#back-to-products");
 
 
     public static CheckoutCompletePage initCheckoutCompletePage() {
@@ -26,5 +27,12 @@ public class CheckoutCompletePage {
         successMessage.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(successMessageText));
         return this;
-    }}
+    }
+
+    public CheckoutCompletePage clickBackHomeBtn() {
+        backHomeBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.text("Back Home"));
+        return this;
+    }
+}
 
