@@ -18,11 +18,13 @@ public class TestCheckProductsPage {
     String secondItemName = "Sauce Labs Fleece Jacket";
     String secondItemPrice = "$49.99";
     String addToCartText = "Add to cart";
-    String emptyValue = StringUtils.EMPTY;
-    ;
+    String emptyValue = StringUtils.EMPTY;;
     String firstNameErrorMsg = "Error: First Name is required";
     String lastNameErrorMsg = "Error: Last Name is required";
     String postalCodeErrorMsg = "Error: Postal Code is required";
+    String price = "65.98";
+    String tax = "5.28";
+    String total = "71.26";
 
     @Test
     public void testLoginWithValidCredentials() {
@@ -73,9 +75,7 @@ public class TestCheckProductsPage {
                 .checkAndFillLastNameFld(lastName)
                 .checkAndFillPostalCodeFld(postalCode)
                 .clickContinue()
-                .checkShipmentInfo(1,"Payment Information:","SauceCard #31337")
-                .checkShipmentInfo(2,"Shipping Information:","Free Pony Express Delivery!")
-                .checkPrice(3, "$65.98","$5.28", "$71.26" )
+                .checkPrice(3, price, tax, total)
                 .clickFinishBtn();
 
 

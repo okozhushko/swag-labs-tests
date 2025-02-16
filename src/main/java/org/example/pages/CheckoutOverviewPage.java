@@ -23,34 +23,26 @@ public class CheckoutOverviewPage {
     }
 
     public CheckoutOverviewPage checkShipmentInfo(int labelIndex, String label, String value) {
-        labelList.get(labelIndex - 1)
-                .shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text(label));
-        fieldList.get(labelIndex - 1)
-                .shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text(value));
+        labelList.get(labelIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT).shouldHave(Condition.text(label));
+        fieldList.get(labelIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT).shouldHave(Condition.text(value));
         return this;
     }
 
     public CheckoutOverviewPage checkPrice(int labelIndex, String price, String tax, String total) {
-        labelList.get(labelIndex - 1)
-                .shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text("Price Total"));
-        itemTotalLbl.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text("Item total: " + price));
-        itemTaxLbl.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text("Tax: " + tax));
-        itemFullTotalLbl.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text("Total: " + total));
-
+        checkField(labelList.get(labelIndex - 1), "Price Total");
+        checkField(itemTotalLbl, "Item total: $" + price);
+        checkField(itemTaxLbl, "Tax: $" + tax);
+        checkField(itemFullTotalLbl, "Total: $" + total);
         return this;
+    }
+
+    private void checkField(SelenideElement label, String expectedText) {
+        label.shouldBe(Condition.visible, DefaultDuration.DEFAULT).shouldHave(Condition.text(expectedText));
     }
 
 
     public CheckoutOverviewPage clickFinishBtn() {
-        finishBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT).
-                shouldHave(Condition.text("Finish"))
-                .click();
+        finishBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT).shouldHave(Condition.text("Finish")).click();
         return this;
     }
 }
