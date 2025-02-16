@@ -46,6 +46,7 @@ public class CheckoutCompletePage {
                 .shouldHave(Condition.text(backHomeBtnText));
         return this;
     }
+
     public CheckoutCompletePage checkFooterInfo() {
         footerInfo.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(footerText));
@@ -77,14 +78,14 @@ public class CheckoutCompletePage {
     }
 
     public static CheckoutCompletePage checkUserRedirected(String link) {
-            String currentWindow = WebDriverRunner.getWebDriver().getWindowHandle();
-            Selenide.switchTo().window(1);
-            String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-            if (!currentUrl.equals(link)) {
-                throw new AssertionError("Expected URL to be " + link + " but found " + currentUrl);
-            }
-            WebDriverRunner.getWebDriver().close();
-            Selenide.switchTo().window(currentWindow);
+        String currentWindow = WebDriverRunner.getWebDriver().getWindowHandle();
+        Selenide.switchTo().window(1);
+        String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
+        if (!currentUrl.equals(link)) {
+            throw new AssertionError("Expected URL to be " + link + " but found " + currentUrl);
+        }
+        WebDriverRunner.getWebDriver().close();
+        Selenide.switchTo().window(currentWindow);
         return new CheckoutCompletePage();
     }
 }
