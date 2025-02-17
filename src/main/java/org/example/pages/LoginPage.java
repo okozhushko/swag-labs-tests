@@ -23,7 +23,8 @@ public class LoginPage {
     }
 
     public static LoginPage initLoginPage() {
-        $(".login_logo").shouldBe(Condition.visible).shouldHave(Condition.text("Swag Labs"));
+        $(".login_logo").shouldBe(Condition.visible)
+                .shouldHave(Condition.text("Swag Labs"));
         return new LoginPage();
     }
 
@@ -35,7 +36,8 @@ public class LoginPage {
                     .fillUserData(AuthConfig.USERNAME, AuthConfig.PASSWORD)
                     .clickLoginButton();
 
-            $x("//span[@data-test='title']").shouldBe(Condition.visible).shouldHave(Condition.text("Products"));
+            $x("//span[@data-test='title']").shouldBe(Condition.visible)
+                    .shouldHave(Condition.text("Products"));
             isLoggedIn = true;
         }
         return new LoginPage();
@@ -48,29 +50,35 @@ public class LoginPage {
                 .fillUserData(username, password)
                 .clickLoginButton();
 
-        $("h3[data-test='error']").shouldBe(Condition.visible).shouldHave(Condition.text(errorMessageText));
+        $("h3[data-test='error']").shouldBe(Condition.visible)
+                .shouldHave(Condition.text(errorMessageText));
 
         return new LoginPage();
     }
 
     private LoginPage fillUserData(String username, String password) {
-        userNameField.shouldBe(Condition.visible, DefaultDuration.DEFAULT).setValue(username);
-        userPasswordField.setValue(password);
+        userNameField.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .sendKeys(username);
+        userPasswordField.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .sendKeys(password);
         return this;
     }
 
     public LoginPage clickLoginButton() {
-        loginButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT).click();
+        loginButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .click();
         return this;
     }
 
     public LoginPage validateErrorMessage() {
-        errorMessage.shouldBe(Condition.visible).shouldHave(Condition.text(errorMessageText));
+        errorMessage.shouldBe(Condition.visible)
+                .shouldHave(Condition.text(errorMessageText));
         return this;
     }
 
     public LoginPage validateLoginSuccess() {
-        productsTitle.shouldBe(Condition.visible).shouldHave(Condition.text("Products"));
+        productsTitle.shouldBe(Condition.visible)
+                .shouldHave(Condition.text("Products"));
         return this;
     }
 }

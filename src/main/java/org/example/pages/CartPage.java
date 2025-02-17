@@ -12,12 +12,12 @@ public class CartPage {
     String checkOutBtnText = "Checkout";
     String removeBtnText = "Remove";
 
-    private final ElementsCollection itemDescr = $$(".inventory_item_desc");
-    private final ElementsCollection itemName = $$(".inventory_item_name");
-    private final ElementsCollection itemPrice = $$(".inventory_item_price");
-    private final ElementsCollection itemImage = $$(".inventory_details_img");
-    private final SelenideElement checkoutBtn = $("#checkout");
+    private final ElementsCollection itemDescr = $$(".inventory_item_desc"),
+            itemName = $$(".inventory_item_name"),
+            itemPrice = $$(".inventory_item_price"),
+            itemImage = $$(".inventory_details_img");
 
+    private final SelenideElement checkoutBtn = $("#checkout");
 
     public static CartPage initCartPage() {
         $(".title").shouldBe(Condition.visible)
@@ -27,10 +27,14 @@ public class CartPage {
 
     public CartPage checkCartItem(int itemIndex, Product expectedProduct) {
         $(".cart_item").shouldBe(Condition.exist);
-        itemName.get(itemIndex - 1).shouldBe(Condition.visible).shouldHave(Condition.text(expectedProduct.getName()));
-        itemDescr.get(itemIndex - 1).shouldBe(Condition.visible).shouldHave(Condition.text(expectedProduct.getDescription()));
-        itemPrice.get(itemIndex - 1).shouldBe(Condition.visible).shouldHave(Condition.text(expectedProduct.getPrice()));
-        $(".cart_button").shouldBe(Condition.visible).shouldHave(Condition.text(removeBtnText));
+        itemName.get(itemIndex - 1).shouldBe(Condition.visible)
+                .shouldHave(Condition.text(expectedProduct.getName()));
+        itemDescr.get(itemIndex - 1).shouldBe(Condition.visible)
+                .shouldHave(Condition.text(expectedProduct.getDescription()));
+        itemPrice.get(itemIndex - 1).shouldBe(Condition.visible)
+                .shouldHave(Condition.text(expectedProduct.getPrice()));
+        $(".cart_button").shouldBe(Condition.visible)
+                .shouldHave(Condition.text(removeBtnText));
         return this;
     }
 

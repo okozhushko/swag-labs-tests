@@ -20,16 +20,16 @@ public class AllItemsPage {
     String removeBtnText = "Remove";
     String addToCartBtnText = "Add to cart";
 
-    private final ElementsCollection productsList = $$(".inventory_item");
-    private final ElementsCollection productNamesList = $$x("//div[@class='inventory_item_name ']");
-    private final ElementsCollection productPriceList = $$x("//div[@class='inventory_item_price']");
-    private final ElementsCollection productDescriptionList = $$x("//div[@class='inventory_item_desc']");
-    private final ElementsCollection addToCardBtnList = $$(".btn_inventory");
-    private ElementsCollection productNames = $$(".inventory_item_name");
-    private ElementsCollection productPrices = $$(".inventory_item_price");
+    private final ElementsCollection productsList = $$(".inventory_item"),
+            productNamesList = $$x("//div[@class='inventory_item_name ']"),
+            productPriceList = $$x("//div[@class='inventory_item_price']"),
+            productDescriptionList = $$x("//div[@class='inventory_item_desc']"),
+            addToCardBtnList = $$(".btn_inventory"),
+            productNames = $$(".inventory_item_name"),
+            productPrices = $$(".inventory_item_price");
 
-    private SelenideElement menuIcon = $("#react-burger-menu-btn");
-    private SelenideElement sortDropdown = $(".product_sort_container");
+    private final SelenideElement menuIcon = $("#react-burger-menu-btn"),
+            sortDropdown = $(".product_sort_container");
 
 
     public static AllItemsPage initAllItemsPage() {
@@ -41,7 +41,8 @@ public class AllItemsPage {
         SelenideElement product = productsList.get(itemIndex - 1).shouldBe(Condition.visible);
         product.shouldBe(Condition.visible, DefaultDuration.DEFAULT);
 
-        productNamesList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getName()));
+        productNamesList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct
+                .getName()));
         productDescriptionList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getDescription()));
         productPriceList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getPrice()));
         return this;

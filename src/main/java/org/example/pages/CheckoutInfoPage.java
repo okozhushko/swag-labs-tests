@@ -11,16 +11,17 @@ public class CheckoutInfoPage {
     String continueBtnText = "Continue";
     String checkoutBtnText = "Checkout";
 
-    private final SelenideElement errorMessage = $x("//h3[@data-test='error']");
-    private final SelenideElement postalCodeNameFld = $("#postal-code");
-    private final SelenideElement checkoutButton = $("#checkout");
-    private final SelenideElement continueButton = $("#continue");
-    private final SelenideElement firstNameFld = $("#first-name");
-    private final SelenideElement lastNameFld = $("#last-name");
+    private final SelenideElement errorMessage = $x("//h3[@data-test='error']"),
+            postalCodeNameFld = $("#postal-code"),
+            checkoutButton = $("#checkout"),
+            continueButton = $("#continue"),
+            firstNameFld = $("#first-name"),
+            lastNameFld = $("#last-name");
 
 
     public static CheckoutInfoPage initCheckoutPage() {
-        $(".title").shouldBe(Condition.visible).shouldHave(Condition.text("Checkout: Your Information"));
+        $(".title").shouldBe(Condition.visible)
+                .shouldHave(Condition.text("Checkout: Your Information"));
         return new CheckoutInfoPage();
     }
 
@@ -36,7 +37,7 @@ public class CheckoutInfoPage {
         lastNameFld.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.attribute("placeholder", "Last Name"));
         ClearSelectedText.clearValueStepByStep(lastNameFld);
-        lastNameFld.val(lastName);
+        lastNameFld.sendKeys(lastName);
         return this;
     }
 
@@ -44,7 +45,7 @@ public class CheckoutInfoPage {
         postalCodeNameFld.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.attribute("placeholder", "Zip/Postal Code"));
         ClearSelectedText.clearValueStepByStep(postalCodeNameFld);
-        postalCodeNameFld.val(postalCode);
+        postalCodeNameFld.sendKeys(postalCode);
         return this;
     }
 

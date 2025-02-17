@@ -19,13 +19,16 @@ public class CheckoutOverviewPage {
     private final  SelenideElement itemFullTotalLbl = $(".summary_total_label");
 
     public static CheckoutOverviewPage initCheckoutOverviewPage() {
-        $(".title").shouldBe(Condition.visible).shouldHave(Condition.text("Checkout: Overview"));
+        $(".title").shouldBe(Condition.visible)
+                .shouldHave(Condition.text("Checkout: Overview"));
         return new CheckoutOverviewPage();
     }
 
     public CheckoutOverviewPage checkShipmentInfo(int labelIndex, String label, String value) {
-        labelList.get(labelIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT).shouldHave(Condition.text(label));
-        fieldList.get(labelIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT).shouldHave(Condition.text(value));
+        labelList.get(labelIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.text(label));
+        fieldList.get(labelIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.text(value));
         return this;
     }
 
