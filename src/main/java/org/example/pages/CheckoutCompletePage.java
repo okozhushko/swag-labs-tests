@@ -55,27 +55,11 @@ public class CheckoutCompletePage {
 
     public CheckoutCompletePage checkFooterSocialLinks(int linkIndex, String socialLink) {
         SocialLinks social = SocialLinks.fromString(socialLink);
-        switch (socialLink) {
-            case "TWITTER" -> {
-                socialIndex.get(linkIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                        .shouldHave(Condition.attribute("href", twitterLink))
-                        .click();
-                CheckoutCompletePage.checkUserRedirected("https://x.com/saucelabs?mx=2");
-            }
-            case "FACEBOOK" -> {
-                socialIndex.get(linkIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                        .shouldHave(Condition.attribute("href", facebookLink))
-                        .click();
-                CheckoutCompletePage.checkUserRedirected("https://www.facebook.com/saucelabs");
-            }
-            case "LINKEDIN" -> {
-                socialIndex.get(linkIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                        .shouldHave(Condition.attribute("href", linkedinLink))
-                        .click();
-                CheckoutCompletePage.checkUserRedirected("https://www.linkedin.com/company/sauce-labs/");
-            }
-        }
-        return this;
+        socialIndex.get(linkIndex - 1)
+                .shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.attribute("href", social.getUrl()))
+                .click();
+        return checkUserRedirected(social.getRedirectUrl());
     }
 
     public static CheckoutCompletePage checkUserRedirected(String link) {
