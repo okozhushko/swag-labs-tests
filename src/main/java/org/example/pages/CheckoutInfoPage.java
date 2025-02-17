@@ -11,13 +11,12 @@ public class CheckoutInfoPage {
     String continueBtnText = "Continue";
     String checkoutBtnText = "Checkout";
 
-    private final SelenideElement firstNameFld = $("#first-name");
-    private final SelenideElement lastNameFld = $("#last-name");
+    private final SelenideElement errorMessage = $x("//h3[@data-test='error']");
     private final SelenideElement postalCodeNameFld = $("#postal-code");
     private final SelenideElement checkoutButton = $("#checkout");
     private final SelenideElement continueButton = $("#continue");
-    private final SelenideElement errorMessage = $x("//h3[@data-test='error']");
-
+    private final SelenideElement firstNameFld = $("#first-name");
+    private final SelenideElement lastNameFld = $("#last-name");
 
 
     public static CheckoutInfoPage initCheckoutPage() {
@@ -75,10 +74,4 @@ public class CheckoutInfoPage {
                 .shouldHave(Condition.text("Error: " + message));
         return this;
     }
-
-    public CheckoutInfoPage clickCloseError() {
-        $(".error-button").shouldBe(Condition.visible, DefaultDuration.DEFAULT).click();
-        return this;
-    }
-
 }

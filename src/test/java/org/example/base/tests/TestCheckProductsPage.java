@@ -9,23 +9,22 @@ import org.testng.annotations.Test;
 
 public class TestCheckProductsPage {
 
-    String firstItemDescription = "Get your testing superhero on with the Sauce Labs bolt T-shirt." +
-            " From American Apparel, 100% ringspun combed cotton, heather gray with red bolt.";
-    String firstItemName = "Sauce Labs Bolt T-Shirt";
-    String firstItemPrice = "$15.99";
     String secondItemDescription = "It's not every day that you come across a midweight quarter-zip" +
             " fleece jacket capable of handling everything from a relaxing day outdoors to a busy day at the office.";
+    String firstItemDescription = "Get your testing superhero on with the Sauce Labs bolt T-shirt." +
+            " From American Apparel, 100% ringspun combed cotton, heather gray with red bolt.";
     String secondItemName = "Sauce Labs Fleece Jacket";
-    String secondItemPrice = "$49.99";
-    String addToCartText = "Add to cart";
-    String emptyValue = StringUtils.EMPTY;
-    ;
+    String postalCodeErrorMsg = "Postal Code is required";
     String firstNameErrorMsg = "First Name is required";
     String lastNameErrorMsg = "Last Name is required";
-    String postalCodeErrorMsg = "Postal Code is required";
+    String firstItemName = "Sauce Labs Bolt T-Shirt";
+    String emptyValue = StringUtils.EMPTY;
+    String addToCartText = "Add to cart";
+    String secondItemPrice = "$49.99";
+    String firstItemPrice = "$15.99";
+    String total = "71.26";
     String price = "65.98";
     String tax = "5.28";
-    String total = "71.26";
 
     @Test
     public void testLoginWithValidCredentials() {
@@ -64,19 +63,16 @@ public class TestCheckProductsPage {
                 .checkAndFillPostalCodeFld(postalCode)
                 .clickContinueBtn()
                 .checkValidationMsg(firstNameErrorMsg)
-                .clickCloseError()
                 .checkAndFillFirstNameFld(firstName)
                 .checkAndFillLastNameFld(emptyValue)
                 .checkAndFillPostalCodeFld(postalCode)
                 .clickContinueBtn()
                 .checkValidationMsg(lastNameErrorMsg)
-                .clickCloseError()
                 .checkAndFillFirstNameFld(firstName)
                 .checkAndFillLastNameFld(lastName)
                 .checkAndFillPostalCodeFld(emptyValue)
                 .clickContinueBtn()
                 .checkValidationMsg(postalCodeErrorMsg)
-                .clickCloseError()
                 .checkAndFillFirstNameFld(firstName)
                 .checkAndFillLastNameFld(lastName)
                 .checkAndFillPostalCodeFld(postalCode)

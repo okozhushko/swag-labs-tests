@@ -26,7 +26,6 @@ public class CheckoutCompletePage {
 
     ElementsCollection socialIndex = $$(".social li a");
 
-
     public static CheckoutCompletePage initCheckoutCompletePage() {
         $(".title").shouldBe(Condition.visible).shouldHave(Condition.text("Checkout: Complete!"));
         return new CheckoutCompletePage();
@@ -43,7 +42,8 @@ public class CheckoutCompletePage {
 
     public CheckoutCompletePage clickBackHomeBtn() {
         backHomeBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text(backHomeBtnText));
+                .shouldHave(Condition.text(backHomeBtnText))
+                .click();
         return this;
     }
 

@@ -5,6 +5,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.example.constants.DefaultDuration;
@@ -121,7 +122,7 @@ public class AllItemsPage {
     public AllItemsPage verifySortingByNameDescending() {
         List<String> actualNames = productNames.texts();
         List<String> sortedNames = actualNames.stream()
-                .sorted((a, b) -> b.compareTo(a))
+                .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
 
         assertThat(actualNames).isEqualTo(sortedNames);

@@ -41,7 +41,6 @@ public class CheckoutOverviewPage {
         label.shouldBe(Condition.visible, DefaultDuration.DEFAULT).shouldHave(Condition.text(expectedText));
     }
 
-
     public CheckoutCompletePage clickFinishBtn() {
         finishBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT).shouldHave(Condition.text(finishBtnText)).click();
         return CheckoutCompletePage.initCheckoutCompletePage();

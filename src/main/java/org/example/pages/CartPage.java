@@ -20,7 +20,8 @@ public class CartPage {
 
 
     public static CartPage initCartPage() {
-        $(".title").shouldBe(Condition.visible).shouldHave(Condition.text("Your Cart"));
+        $(".title").shouldBe(Condition.visible)
+                .shouldHave(Condition.text("Your Cart"));
         return new CartPage();
     }
 
@@ -34,7 +35,8 @@ public class CartPage {
     }
 
     public CartPage checkCartItemDescription(int item) {
-        itemName.get(item - 1).click();
+        itemName.get(item - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .click();
         itemImage.get(item - 1).shouldHave(Condition.attribute("src", itemImageLik));
         return this;
     }
@@ -47,7 +49,8 @@ public class CartPage {
     }
 
     public AllItemsPage clickContinueShoppingBtn() {
-        $("#back-to-products").shouldBe(Condition.visible).shouldHave(Condition.text("Back to products"))
+        $("#back-to-products").shouldBe(Condition.visible)
+                .shouldHave(Condition.text("Back to products"))
                 .click();
         return AllItemsPage.initAllItemsPage();
     }

@@ -3,6 +3,7 @@ package org.example.pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.example.constants.AuthConfig;
+import org.example.constants.DefaultDuration;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -53,13 +54,13 @@ public class LoginPage {
     }
 
     private LoginPage fillUserData(String username, String password) {
-        userNameField.setValue(username);
+        userNameField.shouldBe(Condition.visible, DefaultDuration.DEFAULT).setValue(username);
         userPasswordField.setValue(password);
         return this;
     }
 
     public LoginPage clickLoginButton() {
-        loginButton.click();
+        loginButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT).click();
         return this;
     }
 
