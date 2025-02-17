@@ -18,7 +18,6 @@ import static org.assertj.core.api.Assertions.*;
 public class AllItemsPage {
 
     String removeBtnText = "Remove";
-    String addToCartBtnText = "Add to cart";
 
     private final ElementsCollection productsList = $$(".inventory_item"),
             productNamesList = $$x("//div[@class='inventory_item_name ']"),
@@ -45,14 +44,6 @@ public class AllItemsPage {
                 .getName()));
         productDescriptionList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getDescription()));
         productPriceList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getPrice()));
-        return this;
-    }
-
-    public AllItemsPage clickAddToCartButton(int btnIndex) {
-        addToCardBtnList.get(btnIndex - 1)
-                .shouldBe(Condition.visible)
-                .shouldHave(Condition.text(addToCartBtnText))
-                .click();
         return this;
     }
 
@@ -89,7 +80,7 @@ public class AllItemsPage {
 
     }
 
-    public AllItemsPage clickAddItemBtn(int itemIndex, String btnName) {
+    public AllItemsPage clickAddToCartButton(int itemIndex, String btnName) {
         addToCardBtnList.get(itemIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(btnName))
                 .click();
