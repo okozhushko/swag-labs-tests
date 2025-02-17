@@ -1,16 +1,14 @@
 package org.example.pages;
 
 public enum SocialLinks {
-    TWITTER(1, "https://twitter.com/saucelabs", "https://x.com/saucelabs?mx=2"),
-    FACEBOOK(2, "https://www.facebook.com/saucelabs", "https://www.facebook.com/saucelabs"),
-    LINKEDIN(3, "https://www.linkedin.com/company/sauce-labs/", "https://www.linkedin.com/company/sauce-labs/");
+    TWITTER("https://twitter.com/saucelabs", "https://x.com/saucelabs?mx=2"),
+    FACEBOOK("https://www.facebook.com/saucelabs", "https://www.facebook.com/saucelabs"),
+    LINKEDIN("https://www.linkedin.com/company/sauce-labs/", "https://www.linkedin.com/company/sauce-labs/");
 
-    private final int linkIndex;
     private final String url;
     private final String redirectUrl;
 
-    SocialLinks(int linkIndex, String url, String redirectUrl) {
-        this.linkIndex = linkIndex;
+    SocialLinks(String url, String redirectUrl) {
         this.url = url;
         this.redirectUrl = redirectUrl;
     }
