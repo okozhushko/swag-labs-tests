@@ -1,7 +1,6 @@
 package org.example.pages;
 
 public enum SocialLinks {
-
     TWITTER(1, "https://twitter.com"),
     FACEBOOK(2, "https://facebook.com"),
     LINKEDIN(3, "https://linkedin.com");
@@ -21,5 +20,13 @@ public enum SocialLinks {
     public String getUrl() {
         return url;
     }
-}
 
+    public static SocialLinks fromString(String socialLink) {
+        return switch (socialLink) {
+            case "TWITTER" -> TWITTER;
+            case "FACEBOOK" -> FACEBOOK;
+            case "LINKEDIN" -> LINKEDIN;
+            default -> throw new IllegalArgumentException("Unexpected value: " + socialLink);
+        };
+    }
+}

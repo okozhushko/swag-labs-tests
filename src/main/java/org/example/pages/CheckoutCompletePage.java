@@ -54,6 +54,7 @@ public class CheckoutCompletePage {
     }
 
     public CheckoutCompletePage checkFooterSocialLinks(int linkIndex, String socialLink) {
+        SocialLinks social = SocialLinks.fromString(socialLink);
         switch (socialLink) {
             case "TWITTER" -> {
                 socialIndex.get(linkIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
