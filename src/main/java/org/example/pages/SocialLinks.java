@@ -5,16 +5,16 @@ public enum SocialLinks {
     FACEBOOK("https://www.facebook.com/saucelabs", "https://www.facebook.com/saucelabs"),
     LINKEDIN("https://www.linkedin.com/company/sauce-labs/", "https://www.linkedin.com/company/sauce-labs/");
 
-    private final String url;
+    private final String iconUrl;
     private final String redirectUrl;
 
-    SocialLinks(String url, String redirectUrl) {
-        this.url = url;
+    SocialLinks(String iconUrl, String redirectUrl) {
+        this.iconUrl = iconUrl;
         this.redirectUrl = redirectUrl;
     }
 
-    public String getUrl() {
-        return url;
+    public String getIconUrl() {
+        return iconUrl;
     }
 
     public String getRedirectUrl() {

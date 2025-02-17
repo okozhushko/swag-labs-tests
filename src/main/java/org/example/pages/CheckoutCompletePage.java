@@ -57,7 +57,7 @@ public class CheckoutCompletePage {
         SocialLinks social = SocialLinks.fromString(socialLink);
         socialIndex.get(linkIndex - 1)
                 .shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.attribute("href", social.getUrl()))
+                .shouldHave(Condition.attribute("href", social.getIconUrl()))
                 .click();
         return checkUserRedirected(social.getRedirectUrl());
     }
