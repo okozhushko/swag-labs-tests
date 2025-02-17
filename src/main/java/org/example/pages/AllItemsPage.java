@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.*;
 
 
 public class AllItemsPage {
-    private static final int itemsSize = 0;
+
     String removeBtnText = "Remove";
     String addToCartBtnText = "Add to cart";
 

@@ -21,7 +21,7 @@ public class CheckoutCompletePage {
             backHomeBtn = $("#back-to-products"),
             footerInfo = $(".footer_copy");
 
-    ElementsCollection socialIndex = $$(".social li a");
+    private final ElementsCollection socialIndex = $$(".social li a");
 
     public static CheckoutCompletePage initCheckoutCompletePage() {
         $(".title").shouldBe(Condition.visible).shouldHave(Condition.text("Checkout: Complete!"));

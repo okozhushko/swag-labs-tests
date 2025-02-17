@@ -8,16 +8,18 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class CartPage {
+
     String itemImageLik = "https://www.saucedemo.com/static/media/bolt-shirt-1200x1500.c2599ac5.jpg";
     String checkOutBtnText = "Checkout";
     String removeBtnText = "Remove";
+
+    private final SelenideElement checkoutBtn = $("#checkout");
 
     private final ElementsCollection itemDescr = $$(".inventory_item_desc"),
             itemName = $$(".inventory_item_name"),
             itemPrice = $$(".inventory_item_price"),
             itemImage = $$(".inventory_details_img");
 
-    private final SelenideElement checkoutBtn = $("#checkout");
 
     public static CartPage initCartPage() {
         $(".title").shouldBe(Condition.visible)

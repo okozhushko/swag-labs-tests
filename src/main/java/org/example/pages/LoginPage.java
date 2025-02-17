@@ -9,15 +9,16 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class LoginPage {
 
+    private static boolean isLoggedIn = false;
+    static String errorMessageText = "Epic sadface: Username and password do not match any user in this service";
+
     private final SelenideElement loginPageTitle = $(".login_logo"),
             userPasswordField = $("#password"),
             userNameField = $("#user-name"),
             loginButton = $("#login-button"),
             productsTitle = $x("//span[@data-test='title']"),
             errorMessage = $("h3[data-test='error']");
-    private static boolean isLoggedIn = false;
 
-    static String errorMessageText = "Epic sadface: Username and password do not match any user in this service";
 
     private LoginPage() {
     }

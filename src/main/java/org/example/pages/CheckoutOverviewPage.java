@@ -8,15 +8,18 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class CheckoutOverviewPage {
+
     String finishBtnText = "Finish";
 
-    ElementsCollection labelList = $$(".summary_info_label");
-    ElementsCollection fieldList = $$(".summary_value_label");
+    private final SelenideElement finishBtn = $("#finish"),
+            itemTotalLbl = $(".summary_subtotal_label"),
+            itemTaxLbl = $(".summary_tax_label"),
+            itemFullTotalLbl = $(".summary_total_label");
 
-    private final  SelenideElement finishBtn = $("#finish");
-    private final  SelenideElement itemTotalLbl = $(".summary_subtotal_label");
-    private final  SelenideElement itemTaxLbl = $(".summary_tax_label");
-    private final  SelenideElement itemFullTotalLbl = $(".summary_total_label");
+    private final ElementsCollection labelList = $$(".summary_info_label"),
+            fieldList = $$(".summary_value_label"),
+            itemTitle = $$(".inventory_item_name"),
+            itemDescr = $$(".inventory_item_desc");
 
     public static CheckoutOverviewPage initCheckoutOverviewPage() {
         $(".title").shouldBe(Condition.visible)
@@ -24,6 +27,13 @@ public class CheckoutOverviewPage {
         return new CheckoutOverviewPage();
     }
 
+    public CheckoutOverviewPage checkOverviewItemInfo(int labelIndex, String label, String value) {
+        itemTitle.get(labelIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.text(label));
+        itemDescr.get(labelIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.text(value));
+        return this;
+    }
     public CheckoutOverviewPage checkShipmentInfo(int labelIndex, String label, String value) {
         labelList.get(labelIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(label));
@@ -41,11 +51,14 @@ public class CheckoutOverviewPage {
     }
 
     private void checkField(SelenideElement label, String expectedText) {
-        label.shouldBe(Condition.visible, DefaultDuration.DEFAULT).shouldHave(Condition.text(expectedText));
+        label.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.text(expectedText));
     }
 
     public CheckoutCompletePage clickFinishBtn() {
-        finishBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT).shouldHave(Condition.text(finishBtnText)).click();
+        finishBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.text(finishBtnText))
+                .click();
         return CheckoutCompletePage.initCheckoutCompletePage();
     }
 }

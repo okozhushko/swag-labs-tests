@@ -1,6 +1,7 @@
 package org.example.pages;
 
 public enum SocialLinks {
+
     TWITTER("https://twitter.com/saucelabs", "https://x.com/saucelabs?mx=2"),
     FACEBOOK("https://www.facebook.com/saucelabs", "https://www.facebook.com/saucelabs"),
     LINKEDIN("https://www.linkedin.com/company/sauce-labs/", "https://www.linkedin.com/company/sauce-labs/");

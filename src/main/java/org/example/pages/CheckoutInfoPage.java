@@ -8,6 +8,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class CheckoutInfoPage {
+
     String continueBtnText = "Continue";
     String checkoutBtnText = "Checkout";
 

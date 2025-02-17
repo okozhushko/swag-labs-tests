@@ -28,6 +28,7 @@ public class TestCheckProductsPage {
 
     @Test
     public void testLoginWithValidCredentials() {
+
         String firstName = Faker.getRandomFirstName();
         String lastName = Faker.getRandomLastName();
         String postalCode = String.valueOf(Faker.getRandomNumber(10000, 99999));
@@ -77,6 +78,10 @@ public class TestCheckProductsPage {
                 .checkAndFillLastNameFld(lastName)
                 .checkAndFillPostalCodeFld(postalCode)
                 .clickContinue()
+                .checkOverviewItemInfo(1, "Sauce Labs Bolt T-Shirt", firstItemDescription)
+                .checkOverviewItemInfo(2, "Sauce Labs Fleece Jacket", secondItemDescription)
+                .checkShipmentInfo(1,"Payment Information:","SauceCard #31337")
+                .checkShipmentInfo(2,"Shipping Information:","Free Pony Express Delivery!")
                 .checkPrice(3, price, tax, total)
                 .clickFinishBtn()
                 .checkCompleteOrderInfo()
