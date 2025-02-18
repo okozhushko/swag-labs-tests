@@ -30,7 +30,6 @@ public class AllItemsPage {
     private final SelenideElement menuIcon = $("#react-burger-menu-btn"),
             sortDropdown = $(".product_sort_container");
 
-
     public static AllItemsPage initAllItemsPage() {
         $(".title").shouldBe(Condition.visible).shouldHave(Condition.text("Products"));
         return new AllItemsPage();
@@ -77,7 +76,6 @@ public class AllItemsPage {
                 .shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .click();
         return CartPage.initCartPage();
-
     }
 
     public AllItemsPage clickAddToCartButton(int itemIndex, String btnName) {

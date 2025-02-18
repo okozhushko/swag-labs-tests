@@ -13,11 +13,13 @@ public class TestCheckProductsPage {
             " fleece jacket capable of handling everything from a relaxing day outdoors to a busy day at the office.";
     String firstItemDescription = "Get your testing superhero on with the Sauce Labs bolt T-shirt." +
             " From American Apparel, 100% ringspun combed cotton, heather gray with red bolt.";
-    String secondItemName = "Sauce Labs Fleece Jacket";
     String postalCodeErrorMsg = "Postal Code is required";
+    String secondItemName = "Sauce Labs Fleece Jacket";
     String firstNameErrorMsg = "First Name is required";
     String lastNameErrorMsg = "Last Name is required";
     String firstItemName = "Sauce Labs Bolt T-Shirt";
+    String shipmentInfoText = "Shipping Information:";
+    String paymentInfoText = "Payment Information:";
     String emptyValue = StringUtils.EMPTY;
     String addToCartText = "Add to cart";
     String secondItemPrice = "$49.99";
@@ -78,10 +80,10 @@ public class TestCheckProductsPage {
                 .checkAndFillLastNameFld(lastName)
                 .checkAndFillPostalCodeFld(postalCode)
                 .clickContinue()
-                .checkOverviewItemInfo(1, "Sauce Labs Bolt T-Shirt", firstItemDescription)
-                .checkOverviewItemInfo(2, "Sauce Labs Fleece Jacket", secondItemDescription)
-                .checkShipmentInfo(1,"Payment Information:","SauceCard #31337")
-                .checkShipmentInfo(2,"Shipping Information:","Free Pony Express Delivery!")
+                .checkOverviewItemInfo(1, firstItemName, firstItemDescription)
+                .checkOverviewItemInfo(2, secondItemName, secondItemDescription)
+                .checkShipmentInfo(1,paymentInfoText,"SauceCard #31337")
+                .checkShipmentInfo(2,shipmentInfoText,"Free Pony Express Delivery!")
                 .checkPrice(3, price, tax, total)
                 .clickFinishBtn()
                 .checkCompleteOrderInfo()
