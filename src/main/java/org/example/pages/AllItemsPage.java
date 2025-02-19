@@ -90,12 +90,19 @@ public class AllItemsPage {
 
     public AllItemsPage clickAndCheckMenuItems() {
         menuIcon.shouldBe(Condition.visible, DefaultDuration.DEFAULT).click();
-        List<String> listOfMenuItemLabels =
-                Arrays.asList("All Items", "About", "Logout", "Reset App State");
+
+        List<String> listOfMenuItemLabels = Arrays.asList(
+                "All Items",
+                "About",
+                "Logout",
+                "Reset App State"
+        );
 
         $(".bm-item-list").$$(".menu-item")
                 .shouldHave(CollectionCondition.size(listOfMenuItemLabels.size()))
+                .shouldHave(CollectionCondition.sizeGreaterThan(0))
                 .shouldHave(CollectionCondition.exactTexts(listOfMenuItemLabels));
+
         return this;
     }
 

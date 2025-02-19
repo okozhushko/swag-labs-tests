@@ -28,12 +28,16 @@ public class CheckoutCompletePage {
     }
 
     public CheckoutCompletePage checkCompleteOrderInfo() {
-        successIcon.shouldBe(Condition.visible, DefaultDuration.DEFAULT);
-        successTitle.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text(successTitleText));
-        successMessage.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text(successMessageText));
+        checkElementVisibilityAndText(successIcon, "");
+        checkElementVisibilityAndText(successTitle, successTitleText);
+        checkElementVisibilityAndText(successMessage, successMessageText);
         return this;
+    }
+    private void checkElementVisibilityAndText(SelenideElement element, String expectedText) {
+        element.shouldBe(Condition.visible, DefaultDuration.DEFAULT);
+        if (!expectedText.isEmpty()) {
+            element.shouldHave(Condition.text(expectedText));
+        }
     }
 
     public CheckoutCompletePage clickBackHomeBtn() {
