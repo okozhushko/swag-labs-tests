@@ -45,14 +45,19 @@ public class AllItemsPage {
     }
 
     public AllItemsPage checkAllPageItemsAvailable() {
-        List<String> listOfProductLabels =
-                Arrays.asList("Sauce Labs Backpack", "Sauce Labs Bike Light",
-                        "Sauce Labs Bolt T-Shirt", "Sauce Labs Fleece Jacket",
-                        "Sauce Labs Onesie", "Test.allTheThings() T-Shirt (Red)");
+        List<String> listOfProductLabels = Arrays.asList(
+                "Sauce Labs Backpack",
+                "Sauce Labs Bike Light",
+                "Sauce Labs Bolt T-Shirt",
+                "Sauce Labs Fleece Jacket",
+                "Sauce Labs Onesie",
+                "Test.allTheThings() T-Shirt (Red)"
+        );
 
-        $$(".inventory_item_name ")
+        $$(".inventory_item_name")
                 .shouldHave(CollectionCondition.size(listOfProductLabels.size()))
                 .shouldHave(CollectionCondition.exactTexts(listOfProductLabels));
+
         return this;
     }
 
