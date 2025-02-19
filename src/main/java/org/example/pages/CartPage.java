@@ -9,10 +9,6 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class CartPage {
 
-    String itemImageLik = "https://www.saucedemo.com/static/media/bolt-shirt-1200x1500.c2599ac5.jpg";
-    String checkOutBtnText = "Checkout";
-    String removeBtnText = "Remove";
-
     private final SelenideElement checkoutBtn = $("#checkout");
 
     private final ElementsCollection itemDescr = $$(".inventory_item_desc"),
@@ -36,20 +32,20 @@ public class CartPage {
         itemPrice.get(itemIndex - 1).shouldBe(Condition.visible)
                 .shouldHave(Condition.text(expectedProduct.getPrice()));
         $(".cart_button").shouldBe(Condition.visible)
-                .shouldHave(Condition.text(removeBtnText));
+                .shouldHave(Condition.text("Remove"));
         return this;
     }
 
-    public CartPage checkCartItemDescription(int item) {
+    public CartPage checkCartItemDescription(int item, String image) {
         itemName.get(item - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .click();
-        itemImage.get(item - 1).shouldHave(Condition.attribute("src", itemImageLik));
+        itemImage.get(item - 1).shouldHave(Condition.attribute("src", image));
         return this;
     }
 
     public CheckoutInfoPage clickCheckoutBtn() {
         checkoutBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text(checkOutBtnText))
+                .shouldHave(Condition.text("Checkout"))
                 .click();
         return CheckoutInfoPage.initCheckoutPage();
     }

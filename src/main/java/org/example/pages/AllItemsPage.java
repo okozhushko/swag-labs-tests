@@ -17,8 +17,6 @@ import static org.assertj.core.api.Assertions.*;
 
 public class AllItemsPage {
 
-    String removeBtnText = "Remove";
-
     private final ElementsCollection productsList = $$(".inventory_item"),
             productNamesList = $$x("//div[@class='inventory_item_name ']"),
             productPriceList = $$x("//div[@class='inventory_item_price']"),
@@ -67,7 +65,7 @@ public class AllItemsPage {
     public AllItemsPage checkRemoveItemBtn(int btnIndex) {
         addToCardBtnList.get(btnIndex - 1)
                 .shouldBe(Condition.visible)
-                .shouldHave(Condition.text(removeBtnText));
+                .shouldHave(Condition.text("Remove"));
         return this;
     }
 

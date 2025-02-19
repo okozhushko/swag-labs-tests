@@ -10,7 +10,6 @@ import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class CheckoutCompletePage {
-    String backHomeBtnText = "Back Home";
     String successTitleText = "Thank you for your order!";
     String successMessageText = "Your order has been dispatched, and will arrive just as fast as the pony can get there!";
     String footerText = "© 2025 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy";
@@ -39,7 +38,7 @@ public class CheckoutCompletePage {
 
     public CheckoutCompletePage clickBackHomeBtn() {
         backHomeBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text(backHomeBtnText))
+                .shouldHave(Condition.text("Back Home"))
                 .click();
         return this;
     }

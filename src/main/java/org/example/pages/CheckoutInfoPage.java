@@ -13,7 +13,6 @@ public class CheckoutInfoPage {
 
     private final SelenideElement errorMessage = $x("//h3[@data-test='error']"),
             postalCodeNameFld = $("#postal-code"),
-            checkoutButton = $("#checkout"),
             continueButton = $("#continue"),
             firstNameFld = $("#first-name"),
             lastNameFld = $("#last-name");

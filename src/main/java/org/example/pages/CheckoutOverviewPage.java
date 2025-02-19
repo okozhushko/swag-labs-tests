@@ -9,8 +9,6 @@ import static com.codeborne.selenide.Selenide.$$;
 
 public class CheckoutOverviewPage {
 
-    String finishBtnText = "Finish";
-
     private final SelenideElement finishBtn = $("#finish"),
             itemTotalLbl = $(".summary_subtotal_label"),
             itemTaxLbl = $(".summary_tax_label"),
@@ -57,7 +55,7 @@ public class CheckoutOverviewPage {
 
     public CheckoutCompletePage clickFinishBtn() {
         finishBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text(finishBtnText))
+                .shouldHave(Condition.text("Finish"))
                 .click();
         return CheckoutCompletePage.initCheckoutCompletePage();
     }

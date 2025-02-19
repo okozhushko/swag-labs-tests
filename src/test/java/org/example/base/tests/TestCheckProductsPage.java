@@ -14,6 +14,7 @@ public class TestCheckProductsPage {
             " fleece jacket capable of handling everything from a relaxing day outdoors to a busy day at the office.";
     String firstItemDescription = "Get your testing superhero on with the Sauce Labs bolt T-shirt." +
             " From American Apparel, 100% ringspun combed cotton, heather gray with red bolt.";
+    String itemImageLik = "https://www.saucedemo.com/static/media/bolt-shirt-1200x1500.c2599ac5.jpg";
     String postalCodeErrorMsg = "Postal Code is required";
     String secondItemName = "Sauce Labs Fleece Jacket";
     String firstNameErrorMsg = "First Name is required";
@@ -53,7 +54,7 @@ public class TestCheckProductsPage {
                 .checkRemoveItemBtn(3)
                 .clickOnBucketIcon()
                 .checkCartItem(1, expectedProductFirst)
-                .checkCartItemDescription(1)
+                .checkCartItemDescription(1, itemImageLik)
                 .clickContinueShoppingBtn()
                 .checkItemDetails(4, expectedProductSecond)
                 .clickAddToCartButton(4, addToCartText)
