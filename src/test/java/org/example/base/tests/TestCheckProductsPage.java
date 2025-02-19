@@ -1,5 +1,6 @@
 package org.example.base.tests;
 
+import com.codeborne.selenide.Selenide;
 import org.apache.commons.lang3.StringUtils;
 import org.example.helpers.Faker;
 import org.example.pages.AllItemsPage;

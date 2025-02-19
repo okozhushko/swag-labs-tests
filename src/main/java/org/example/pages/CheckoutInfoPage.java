@@ -10,7 +10,6 @@ import static com.codeborne.selenide.Selenide.$x;
 public class CheckoutInfoPage {
 
     String continueBtnText = "Continue";
-    String checkoutBtnText = "Checkout";
 
     private final SelenideElement errorMessage = $x("//h3[@data-test='error']"),
             postalCodeNameFld = $("#postal-code"),
@@ -47,13 +46,6 @@ public class CheckoutInfoPage {
                 .shouldHave(Condition.attribute("placeholder", "Zip/Postal Code"));
         ClearSelectedText.clearValueStepByStep(postalCodeNameFld);
         postalCodeNameFld.sendKeys(postalCode);
-        return this;
-    }
-
-    public CheckoutInfoPage clickCheckoutBtn() {
-        checkoutButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.value(checkoutBtnText))
-                .click();
         return this;
     }
 

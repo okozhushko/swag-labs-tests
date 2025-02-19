@@ -103,7 +103,9 @@ public class AllItemsPage {
 
     public AllItemsPage verifySortingByNameAscending() {
         List<String> actualNames = productNames.texts();
-        List<String> sortedNames = actualNames.stream().sorted().collect(Collectors.toList());
+        List<String> sortedNames = actualNames.stream()
+                .sorted()
+                .collect(Collectors.toList());
 
         assertThat(actualNames).isEqualTo(sortedNames);
         return this;
