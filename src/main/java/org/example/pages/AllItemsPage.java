@@ -4,16 +4,16 @@ import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 import org.example.constants.DefaultDuration;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 import static com.codeborne.selenide.Selenide.$$x;
 import static org.assertj.core.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AllItemsPage {
 
@@ -35,17 +35,15 @@ public class AllItemsPage {
 
     public AllItemsPage checkItemDetails(int itemIndex, Product expectedProduct) {
         SelenideElement product = productsList.get(itemIndex - 1).shouldBe(Condition.visible);
-        product.shouldBe(Condition.visible, DefaultDuration.DEFAULT);
 
-        productNamesList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct
-                .getName()));
+        productNamesList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getName()));
         productDescriptionList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getDescription()));
         productPriceList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getPrice()));
         return this;
     }
 
     public AllItemsPage checkAllPageItemsAvailable() {
-        List<String> listOfProductLabels = Arrays.asList(
+        List<String> expectedProductNames = Arrays.asList(
                 "Sauce Labs Backpack",
                 "Sauce Labs Bike Light",
                 "Sauce Labs Bolt T-Shirt",
@@ -55,14 +53,14 @@ public class AllItemsPage {
         );
 
         $$(".inventory_item_name")
-                .shouldHave(CollectionCondition.size(listOfProductLabels.size()))
-                .shouldHave(CollectionCondition.exactTexts(listOfProductLabels));
+                .shouldHave(CollectionCondition.size(expectedProductNames.size()))
+                .shouldHave(CollectionCondition.exactTexts(expectedProductNames));
 
         return this;
     }
 
     public AllItemsPage checkItemAddedToBucket(String value) {
-        $(".shopping_cart_badge").shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+        $(".shopping_cart_badge").shouldBe(Condition.visible)
                 .shouldHave(Condition.text(value));
         return this;
     }
@@ -82,7 +80,8 @@ public class AllItemsPage {
     }
 
     public AllItemsPage clickAddToCartButton(int itemIndex, String btnName) {
-        addToCardBtnList.get(itemIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+        addToCardBtnList.get(itemIndex - 1)
+                .shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(btnName))
                 .click();
         return this;
@@ -107,7 +106,8 @@ public class AllItemsPage {
     }
 
     public AllItemsPage sortBy(String sortOption) {
-        sortDropdown.selectOption(sortOption);
+        sortDropdown.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .selectOptionContainingText(sortOption);
         return this;
     }
 
