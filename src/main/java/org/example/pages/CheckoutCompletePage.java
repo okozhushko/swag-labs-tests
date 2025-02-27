@@ -33,6 +33,7 @@ public class CheckoutCompletePage {
         checkElementVisibilityAndText(successMessage, successMessageText);
         return this;
     }
+
     private void checkElementVisibilityAndText(SelenideElement element, String expectedText) {
         element.shouldBe(Condition.visible, DefaultDuration.DEFAULT);
         if (!expectedText.isEmpty()) {
@@ -47,15 +48,15 @@ public class CheckoutCompletePage {
         return this;
     }
 
-    public CheckoutCompletePage checkFooterInfo() {
+    public CheckoutCompletePage checkCopyrightNotice() {
         footerInfo.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(footerText));
         return this;
     }
 
-    public CheckoutCompletePage checkFooterSocialLinks(int linkIndex, String socialLink) {
-        SocialLinks social = SocialLinks.fromString(socialLink);
-        socialIndex.get(linkIndex - 1)
+    public CheckoutCompletePage checkFooterSocialLinks(int iconIndex, String socialName) {
+        SocialLinks social = SocialLinks.fromString(socialName);
+        socialIndex.get(iconIndex - 1)
                 .shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.attribute("href", social.getIconUrl()))
                 .click();

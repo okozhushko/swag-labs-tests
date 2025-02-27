@@ -1,6 +1,5 @@
 package org.example.base.tests;
 
-import com.codeborne.selenide.Selenide;
 import org.apache.commons.lang3.StringUtils;
 import org.example.helpers.Faker;
 import org.example.pages.AllItemsPage;
@@ -92,7 +91,7 @@ public class TestCheckProductsPage {
                 .checkFooterSocialLinks(1, "TWITTER")
                 .checkFooterSocialLinks(2, "FACEBOOK")
                 .checkFooterSocialLinks(3, "LINKEDIN")
-                .checkFooterInfo()
+                .checkCopyrightNotice()
                 .clickBackHomeBtn();
     }
 }
