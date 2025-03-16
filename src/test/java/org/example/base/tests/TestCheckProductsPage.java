@@ -90,7 +90,7 @@ public class TestCheckProductsPage {
                 .checkCompleteOrderInfo()
                 .checkFooterSocialLinks(1, "TWITTER")
                 .checkFooterSocialLinks(2, "FACEBOOK")
-                .checkFooterSocialLinks(3, "LINKEDIN")
+                .checkFooterSocialLinks(3, "LINKEDIN")//TODO check links
                 .checkCopyrightNotice()
                 .clickBackHomeBtn();
     }
