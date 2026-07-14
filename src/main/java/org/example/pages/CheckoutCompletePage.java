@@ -12,7 +12,7 @@ import static com.codeborne.selenide.Selenide.$$;
 public class CheckoutCompletePage {
     String successTitleText = "Thank you for your order!";
     String successMessageText = "Your order has been dispatched, and will arrive just as fast as the pony can get there!";
-    String footerText = "© 2025 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy";
+    String footerText = "© 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy";
 
     private final SelenideElement successIcon = $(".pony_express"),
             successTitle = $(".complete-header"),
@@ -53,13 +53,16 @@ public class CheckoutCompletePage {
                 .shouldHave(Condition.text(footerText));
         return this;
     }
-
-    public CheckoutCompletePage checkFooterSocialLinks(int iconIndex, String socialName) {
+    public CheckoutCompletePage checkFooterSocialLinks(String socialName) {
         SocialLinks social = SocialLinks.fromString(socialName);
-        socialIndex.get(iconIndex - 1)
-                .shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.attribute("href", social.getIconUrl()))
-                .click();
+
+        SelenideElement socialLink = $$("ul.social a")
+                .filter(Condition.text(socialName))
+                .filter(Condition.attribute("href", social.getIconUrl()))
+                .first()
+                .shouldBe(Condition.visible, DefaultDuration.DEFAULT);
+
+        socialLink.click();
         return checkUserRedirected(social.getRedirectUrl());
     }
 

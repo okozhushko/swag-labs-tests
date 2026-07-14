@@ -13,7 +13,7 @@ public class TestCheckProductsPage {
             " fleece jacket capable of handling everything from a relaxing day outdoors to a busy day at the office.";
     String firstItemDescription = "Get your testing superhero on with the Sauce Labs bolt T-shirt." +
             " From American Apparel, 100% ringspun combed cotton, heather gray with red bolt.";
-    String itemImageLik = "https://www.saucedemo.com/static/media/bolt-shirt-1200x1500.c2599ac5.jpg";
+    String itemImageLik = "https://www.saucedemo.com/assets/bolt-shirt-1200x1500-mR0ldpVS.jpg";
     String postalCodeErrorMsg = "Postal Code is required";
     String secondItemName = "Sauce Labs Fleece Jacket";
     String firstNameErrorMsg = "First Name is required";
@@ -40,6 +40,7 @@ public class TestCheckProductsPage {
         Product expectedProductSecond = new Product(secondItemName, secondItemDescription, secondItemPrice);
         LoginPage.login()
                 .validateLoginSuccess();
+
         AllItemsPage.initAllItemsPage()
                 .checkAllPageItemsAvailable()
                 .clickAndCheckMenuItems()
@@ -88,9 +89,9 @@ public class TestCheckProductsPage {
                 .checkPrice(3, price, tax, total)
                 .clickFinishBtn()
                 .checkCompleteOrderInfo()
-                .checkFooterSocialLinks(1, "TWITTER")
-                .checkFooterSocialLinks(2, "FACEBOOK")
-                .checkFooterSocialLinks(3, "LINKEDIN")//TODO check links
+                .checkFooterSocialLinks( "TWITTER")
+                .checkFooterSocialLinks( "FACEBOOK")
+                .checkFooterSocialLinks( "LINKEDIN")
                 .checkCopyrightNotice()
                 .clickBackHomeBtn();
     }
