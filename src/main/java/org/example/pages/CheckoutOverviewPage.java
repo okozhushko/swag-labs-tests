@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.example.constants.DefaultDuration;
+import org.example.constants.PageConstants;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -21,7 +22,7 @@ public class CheckoutOverviewPage {
 
     public static CheckoutOverviewPage initCheckoutOverviewPage() {
         $(".title").shouldBe(Condition.visible)
-                .shouldHave(Condition.text("Checkout: Overview"));
+                .shouldHave(Condition.text(PageConstants.CHECKOUT_OVERVIEW_TITLE));
         return new CheckoutOverviewPage();
     }
 
@@ -41,7 +42,7 @@ public class CheckoutOverviewPage {
     }
 
     public CheckoutOverviewPage checkPrice(int labelIndex, String price, String tax, String total) {
-        checkField(labelList.get(labelIndex - 1), "Price Total");
+        checkField(labelList.get(labelIndex - 1), PageConstants.PRICE_TOTAL_LABEL);
         checkField(itemTotalLbl, "Item total: $" + price);
         checkField(itemTaxLbl, "Tax: $" + tax);
         checkField(itemFullTotalLbl, "Total: $" + total);

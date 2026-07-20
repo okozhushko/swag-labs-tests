@@ -6,13 +6,11 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import org.example.constants.DefaultDuration;
+import org.example.constants.PageConstants;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
 public class CheckoutCompletePage {
-    String successTitleText = "Thank you for your order!";
-    String successMessageText = "Your order has been dispatched, and will arrive just as fast as the pony can get there!";
-    String footerText = "© 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy";
 
     private final SelenideElement successIcon = $(".pony_express"),
             successTitle = $(".complete-header"),
@@ -23,14 +21,14 @@ public class CheckoutCompletePage {
     private final ElementsCollection socialIndex = $$(".social li a");
 
     public static CheckoutCompletePage initCheckoutCompletePage() {
-        $(".title").shouldBe(Condition.visible).shouldHave(Condition.text("Checkout: Complete!"));
+        $(".title").shouldBe(Condition.visible).shouldHave(Condition.text(PageConstants.CHECKOUT_COMPLETE_TITLE));
         return new CheckoutCompletePage();
     }
 
     public CheckoutCompletePage checkCompleteOrderInfo() {
         checkElementVisibilityAndText(successIcon, "");
-        checkElementVisibilityAndText(successTitle, successTitleText);
-        checkElementVisibilityAndText(successMessage, successMessageText);
+        checkElementVisibilityAndText(successTitle, PageConstants.SUCCESS_TITLE);
+        checkElementVisibilityAndText(successMessage, PageConstants.SUCCESS_MESSAGE);
         return this;
     }
 
@@ -50,7 +48,7 @@ public class CheckoutCompletePage {
 
     public CheckoutCompletePage checkCopyrightNotice() {
         footerInfo.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text(footerText));
+                .shouldHave(Condition.text(PageConstants.FOOTER_COPYRIGHT));
         return this;
     }
     public CheckoutCompletePage checkFooterSocialLinks(String socialName) {

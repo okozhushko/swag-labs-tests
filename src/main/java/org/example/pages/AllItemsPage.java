@@ -5,9 +5,9 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.example.constants.DefaultDuration;
+import org.example.constants.PageConstants;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static com.codeborne.selenide.Selenide.$$x;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
@@ -18,39 +18,29 @@ import java.util.stream.Collectors;
 public class AllItemsPage {
 
     private final ElementsCollection productsList = $$(".inventory_item"),
-            productNamesList = $$x("//div[@class='inventory_item_name ']"),
-            productPriceList = $$x("//div[@class='inventory_item_price']"),
-            productDescriptionList = $$x("//div[@class='inventory_item_desc']"),
-            addToCardBtnList = $$(".btn_inventory"),
             productNames = $$(".inventory_item_name"),
-            productPrices = $$(".inventory_item_price");
+            productPrices = $$(".inventory_item_price"),
+            productDescriptions = $$(".inventory_item_desc"),
+            addToCardBtnList = $$(".btn_inventory");
 
     private final SelenideElement menuIcon = $("#react-burger-menu-btn"),
             sortDropdown = $(".product_sort_container");
 
     public static AllItemsPage initAllItemsPage() {
-        $(".title").shouldBe(Condition.visible).shouldHave(Condition.text("Products"));
+        $(".title").shouldBe(Condition.visible).shouldHave(Condition.text(PageConstants.PRODUCTS_PAGE_TITLE));
         return new AllItemsPage();
     }
 
     public AllItemsPage checkItemDetails(int itemIndex, Product expectedProduct) {
-        SelenideElement product = productsList.get(itemIndex - 1).shouldBe(Condition.visible);
-
-        productNamesList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getName()));
-        productDescriptionList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getDescription()));
-        productPriceList.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getPrice()));
+        productsList.get(itemIndex - 1).shouldBe(Condition.visible);
+        productNames.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getName()));
+        productDescriptions.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getDescription()));
+        productPrices.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getPrice()));
         return this;
     }
 
     public AllItemsPage checkAllPageItemsAvailable() {
-        List<String> expectedProductNames = Arrays.asList(
-                "Sauce Labs Backpack",
-                "Sauce Labs Bike Light",
-                "Sauce Labs Bolt T-Shirt",
-                "Sauce Labs Fleece Jacket",
-                "Sauce Labs Onesie",
-                "Test.allTheThings() T-Shirt (Red)"
-        );
+        List<String> expectedProductNames = Arrays.asList(PageConstants.EXPECTED_PRODUCT_NAMES);
 
         $$(".inventory_item_name")
                 .shouldHave(CollectionCondition.size(expectedProductNames.size()))
@@ -68,7 +58,7 @@ public class AllItemsPage {
     public AllItemsPage checkRemoveItemBtn(int btnIndex) {
         addToCardBtnList.get(btnIndex - 1)
                 .shouldBe(Condition.visible)
-                .shouldHave(Condition.text("Remove"));
+                .shouldHave(Condition.text(PageConstants.REMOVE_BTN));
         return this;
     }
 
@@ -79,10 +69,10 @@ public class AllItemsPage {
         return CartPage.initCartPage();
     }
 
-    public AllItemsPage clickAddToCartButton(int itemIndex, String btnName) {
+    public AllItemsPage clickAddToCartButton(int itemIndex) {
         addToCardBtnList.get(itemIndex - 1)
                 .shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text(btnName))
+                .shouldHave(Condition.text(PageConstants.ADD_TO_CART_BTN))
                 .click();
         return this;
     }
@@ -90,12 +80,7 @@ public class AllItemsPage {
     public AllItemsPage clickAndCheckMenuItems() {
         menuIcon.shouldBe(Condition.visible, DefaultDuration.DEFAULT).click();
 
-        List<String> listOfMenuItemLabels = Arrays.asList(
-                "All Items",
-                "About",
-                "Logout",
-                "Reset App State"
-        );
+        List<String> listOfMenuItemLabels = Arrays.asList(PageConstants.MENU_ITEMS);
 
         $(".bm-item-list").$$(".menu-item")
                 .shouldHave(CollectionCondition.size(listOfMenuItemLabels.size()))

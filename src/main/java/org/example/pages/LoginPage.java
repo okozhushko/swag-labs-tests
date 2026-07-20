@@ -4,19 +4,20 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.example.constants.AuthConfig;
 import org.example.constants.DefaultDuration;
+import org.example.constants.PageConstants;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
 public class LoginPage {
 
     private static boolean isLoggedIn = false;
-    static String errorMessageText = "Epic sadface: Username and password do not match any user in this service";
 
     private final SelenideElement loginPageTitle = $(".login_logo"),
             userPasswordField = $("#password"),
             userNameField = $("#user-name"),
             loginButton = $("#login-button"),
-            productsTitle = $x("//span[@data-test='title']"),
+            productsTitle = $("span[data-test='title']"),
             errorMessage = $("h3[data-test='error']");
 
 
@@ -25,7 +26,7 @@ public class LoginPage {
 
     public static LoginPage initLoginPage() {
         $(".login_logo").shouldBe(Condition.visible)
-                .shouldHave(Condition.text("Swag Labs"));
+                .shouldHave(Condition.text(PageConstants.LOGIN_PAGE_LOGO));
         return new LoginPage();
     }
 
@@ -37,8 +38,8 @@ public class LoginPage {
                     .fillUserData(AuthConfig.USERNAME, AuthConfig.PASSWORD)
                     .clickLoginButton();
 
-            $x("//span[@data-test='title']").shouldBe(Condition.visible)
-                    .shouldHave(Condition.text("Products"));
+            $("span[data-test='title']").shouldBe(Condition.visible)
+                    .shouldHave(Condition.text(PageConstants.PRODUCTS_PAGE_TITLE));
             isLoggedIn = true;
         }
         return new LoginPage();
@@ -52,7 +53,7 @@ public class LoginPage {
                 .clickLoginButton();
 
         $("h3[data-test='error']").shouldBe(Condition.visible)
-                .shouldHave(Condition.text(errorMessageText));
+                .shouldHave(Condition.text(PageConstants.LOGIN_ERROR_MESSAGE));
 
         return new LoginPage();
     }
@@ -73,13 +74,13 @@ public class LoginPage {
 
     public LoginPage validateErrorMessage() {
         errorMessage.shouldBe(Condition.visible)
-                .shouldHave(Condition.text(errorMessageText));
+                .shouldHave(Condition.text(PageConstants.LOGIN_ERROR_MESSAGE));
         return this;
     }
 
     public LoginPage validateLoginSuccess() {
         productsTitle.shouldBe(Condition.visible)
-                .shouldHave(Condition.text("Products"));
+                .shouldHave(Condition.text(PageConstants.PRODUCTS_PAGE_TITLE));
         return this;
     }
 }

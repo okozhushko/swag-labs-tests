@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.example.constants.DefaultDuration;
+import org.example.constants.PageConstants;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -19,7 +20,7 @@ public class CartPage {
 
     public static CartPage initCartPage() {
         $(".title").shouldBe(Condition.visible)
-                .shouldHave(Condition.text("Your Cart"));
+                .shouldHave(Condition.text(PageConstants.YOUR_CART_TITLE));
         return new CartPage();
     }
 
@@ -32,7 +33,7 @@ public class CartPage {
         itemPrice.get(itemIndex - 1).shouldBe(Condition.visible)
                 .shouldHave(Condition.text(expectedProduct.getPrice()));
         $(".cart_button").shouldBe(Condition.visible)
-                .shouldHave(Condition.text("Remove"));
+                .shouldHave(Condition.text(PageConstants.REMOVE_BTN));
         return this;
     }
 
@@ -45,14 +46,14 @@ public class CartPage {
 
     public CheckoutInfoPage clickCheckoutBtn() {
         checkoutBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text("Checkout"))
+                .shouldHave(Condition.text(PageConstants.CHECKOUT_BTN))
                 .click();
         return CheckoutInfoPage.initCheckoutPage();
     }
 
     public AllItemsPage clickContinueShoppingBtn() {
         $("#back-to-products").shouldBe(Condition.visible)
-                .shouldHave(Condition.text("Back to products"))
+                .shouldHave(Condition.text(PageConstants.BACK_TO_PRODUCTS_BTN))
                 .click();
         return AllItemsPage.initAllItemsPage();
     }

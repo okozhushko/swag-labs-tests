@@ -4,14 +4,12 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.example.actions.ClearSelectedText;
 import org.example.constants.DefaultDuration;
+import org.example.constants.PageConstants;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
 
 public class CheckoutInfoPage {
 
-    String continueBtnText = "Continue";
-
-    private final SelenideElement errorMessage = $x("//h3[@data-test='error']"),
+    private final SelenideElement errorMessage = $("h3[data-test='error']"),
             postalCodeNameFld = $("#postal-code"),
             continueButton = $("#continue"),
             firstNameFld = $("#first-name"),
@@ -20,7 +18,7 @@ public class CheckoutInfoPage {
 
     public static CheckoutInfoPage initCheckoutPage() {
         $(".title").shouldBe(Condition.visible)
-                .shouldHave(Condition.text("Checkout: Your Information"));
+                .shouldHave(Condition.text(PageConstants.CHECKOUT_INFO_TITLE));
         return new CheckoutInfoPage();
     }
 
@@ -50,14 +48,14 @@ public class CheckoutInfoPage {
 
     public CheckoutInfoPage clickContinueBtn() {
         continueButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.value(continueBtnText))
+                .shouldHave(Condition.value(PageConstants.CONTINUE_BTN_TEXT))
                 .click();
         return this;
     }
 
     public CheckoutOverviewPage clickContinue() {
         continueButton.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.value(continueBtnText))
+                .shouldHave(Condition.value(PageConstants.CONTINUE_BTN_TEXT))
                 .click();
         return CheckoutOverviewPage.initCheckoutOverviewPage();
     }
