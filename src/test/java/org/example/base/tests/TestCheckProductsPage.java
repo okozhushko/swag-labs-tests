@@ -36,10 +36,7 @@ public class TestCheckProductsPage {
                 TestConstants.SECOND_ITEM_PRICE
         );
 
-        LoginPage.login()
-                .validateLoginSuccess();
-
-        AllItemsPage allItemsPage = AllItemsPage.initAllItemsPage()
+        AllItemsPage allItemsPage = LoginPage.loginViaCookie()
                 .checkAllPageItemsAvailable()
                 .clickMenu()
                 .verifyMenuItems()

@@ -1,5 +1,6 @@
 package org.example.pages;
 
+import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -11,12 +12,15 @@ import static org.example.actions.IndexedElements.byPosition;
 
 public class CartPage {
 
-    private final SelenideElement checkoutBtn = $("#checkout");
+    private final SelenideElement checkoutBtn = $("#checkout"),
+            cartBadge = $(".shopping_cart_badge");
 
     private final ElementsCollection itemDescr = $$(".inventory_item_desc"),
             itemName = $$(".inventory_item_name"),
             itemPrice = $$(".inventory_item_price"),
-            itemImage = $$(".inventory_details_img");
+            itemImage = $$(".inventory_details_img"),
+            cartItems = $$(".cart_item"),
+            removeButtons = $$(".cart_button");
 
 
     public static CartPage initCartPage() {
@@ -46,6 +50,24 @@ public class CartPage {
 
     public CartPage verifyItemImage(int itemPosition, String imageUrl) {
         byPosition(itemImage, itemPosition).shouldHave(Condition.attribute("src", imageUrl));
+        return this;
+    }
+
+    public CartPage clickRemoveItemBtn(int itemPosition) {
+        byPosition(removeButtons, itemPosition)
+                .shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.text(PageConstants.REMOVE_BTN))
+                .click();
+        return this;
+    }
+
+    public CartPage checkCartIsEmpty() {
+        cartItems.shouldHave(CollectionCondition.size(0));
+        return this;
+    }
+
+    public CartPage checkCartBadgeNotVisible() {
+        cartBadge.shouldNot(Condition.exist);
         return this;
     }
 

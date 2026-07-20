@@ -23,7 +23,8 @@ public class AllItemsPage {
             addToCardBtnList = $$(".btn_inventory");
 
     private final SelenideElement menuIcon = $("#react-burger-menu-btn"),
-            sortDropdown = $(".product_sort_container");
+            sortDropdown = $(".product_sort_container"),
+            logoutLink = $("#logout_sidebar_link");
 
     public static AllItemsPage initAllItemsPage() {
         $(".title").shouldBe(Condition.visible).shouldHave(Condition.text(PageConstants.PRODUCTS_PAGE_TITLE));
@@ -96,6 +97,11 @@ public class AllItemsPage {
         sortDropdown.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .selectOptionContainingText(sortOption);
         return this;
+    }
+
+    public LoginPage clickLogout() {
+        logoutLink.shouldBe(Condition.visible, DefaultDuration.DEFAULT).click();
+        return LoginPage.initLoginPage();
     }
 
     public List<String> getProductNames() {
