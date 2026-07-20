@@ -8,10 +8,9 @@ import org.example.constants.DefaultDuration;
 import org.example.constants.PageConstants;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static org.assertj.core.api.Assertions.*;
+import static org.example.actions.IndexedElements.byPosition;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,11 +30,11 @@ public class AllItemsPage {
         return new AllItemsPage();
     }
 
-    public AllItemsPage checkItemDetails(int itemIndex, Product expectedProduct) {
-        productsList.get(itemIndex - 1).shouldBe(Condition.visible);
-        productNames.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getName()));
-        productDescriptions.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getDescription()));
-        productPrices.get(itemIndex - 1).shouldHave(Condition.text(expectedProduct.getPrice()));
+    public AllItemsPage checkItemDetails(int itemPosition, Product expectedProduct) {
+        byPosition(productsList, itemPosition).shouldBe(Condition.visible);
+        byPosition(productNames, itemPosition).shouldHave(Condition.text(expectedProduct.getName()));
+        byPosition(productDescriptions, itemPosition).shouldHave(Condition.text(expectedProduct.getDescription()));
+        byPosition(productPrices, itemPosition).shouldHave(Condition.text(expectedProduct.getPrice()));
         return this;
     }
 
@@ -55,8 +54,8 @@ public class AllItemsPage {
         return this;
     }
 
-    public AllItemsPage checkRemoveItemBtn(int btnIndex) {
-        addToCardBtnList.get(btnIndex - 1)
+    public AllItemsPage checkRemoveItemBtn(int btnPosition) {
+        byPosition(addToCardBtnList, btnPosition)
                 .shouldBe(Condition.visible)
                 .shouldHave(Condition.text(PageConstants.REMOVE_BTN));
         return this;
@@ -69,8 +68,8 @@ public class AllItemsPage {
         return CartPage.initCartPage();
     }
 
-    public AllItemsPage clickAddToCartButton(int itemIndex) {
-        addToCardBtnList.get(itemIndex - 1)
+    public AllItemsPage clickAddToCartButton(int itemPosition) {
+        byPosition(addToCardBtnList, itemPosition)
                 .shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(PageConstants.ADD_TO_CART_BTN))
                 .click();
@@ -99,47 +98,13 @@ public class AllItemsPage {
         return this;
     }
 
-    public AllItemsPage verifySortingByNameAscending() {
-        List<String> actualNames = productNames.texts();
-        List<String> sortedNames = actualNames.stream()
-                .sorted()
-                .collect(Collectors.toList());
-
-        assertThat(actualNames).isEqualTo(sortedNames);
-        return this;
+    public List<String> getProductNames() {
+        return productNames.texts();
     }
 
-    public AllItemsPage verifySortingByNameDescending() {
-        List<String> actualNames = productNames.texts();
-        List<String> sortedNames = actualNames.stream()
-                .sorted(Comparator.reverseOrder())
-                .collect(Collectors.toList());
-
-        assertThat(actualNames).isEqualTo(sortedNames);
-        return this;
-    }
-
-    public AllItemsPage verifySortingByPriceLowToHigh() {
-        List<Double> actualPrices = productPrices.texts().stream()
+    public List<Double> getProductPrices() {
+        return productPrices.texts().stream()
                 .map(price -> Double.parseDouble(price.replace("$", "")))
                 .collect(Collectors.toList());
-
-        List<Double> sortedPrices = actualPrices.stream().sorted().collect(Collectors.toList());
-
-        assertThat(actualPrices).isEqualTo(sortedPrices);
-        return this;
-    }
-
-    public AllItemsPage verifySortingByPriceHighToLow() {
-        List<Double> actualPrices = productPrices.texts().stream()
-                .map(price -> Double.parseDouble(price.replace("$", "")))
-                .collect(Collectors.toList());
-
-        List<Double> sortedPrices = actualPrices.stream()
-                .sorted((a, b) -> Double.compare(b, a))
-                .collect(Collectors.toList());
-
-        assertThat(actualPrices).isEqualTo(sortedPrices);
-        return this;
     }
 }

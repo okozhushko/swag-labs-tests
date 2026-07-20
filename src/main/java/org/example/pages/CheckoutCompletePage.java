@@ -9,7 +9,6 @@ import org.example.constants.DefaultDuration;
 import org.example.constants.PageConstants;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class CheckoutCompletePage {
 
@@ -52,7 +51,7 @@ public class CheckoutCompletePage {
                 .shouldHave(Condition.text(PageConstants.FOOTER_COPYRIGHT));
         return this;
     }
-    public CheckoutCompletePage checkFooterSocialLinks(String socialName) {
+    public String clickSocialLinkAndGetRedirectedUrl(String socialName) {
         SocialLinks social = SocialLinks.fromString(socialName);
 
         SelenideElement socialLink = $$("ul.social a")
@@ -62,17 +61,16 @@ public class CheckoutCompletePage {
                 .shouldBe(Condition.visible, DefaultDuration.DEFAULT);
 
         socialLink.click();
-        return checkUserRedirected(social.getRedirectUrl());
+        return closePopupAndGetRedirectedUrl();
     }
 
-    public static CheckoutCompletePage checkUserRedirected(String expectedUrl) {
+    private static String closePopupAndGetRedirectedUrl() {
         String currentWindow = WebDriverRunner.getWebDriver().getWindowHandle();
         Selenide.switchTo().window(1);
         String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-        assertThat(currentUrl).as("Redirected URL").isEqualTo(expectedUrl);
         WebDriverRunner.getWebDriver().close();
         Selenide.switchTo().window(currentWindow);
-        return new CheckoutCompletePage();
+        return currentUrl;
     }
 }
 

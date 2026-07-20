@@ -11,8 +11,6 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class LoginPage {
 
-    private static boolean isLoggedIn = false;
-
     private final SelenideElement loginPageTitle = $(".login_logo"),
             userPasswordField = $("#password"),
             userNameField = $("#user-name"),
@@ -31,17 +29,14 @@ public class LoginPage {
     }
 
     public static LoginPage login() {
-        if (!isLoggedIn) {
-            open(AuthConfig.BASE_URL);
+        open(AuthConfig.BASE_URL);
 
-            initLoginPage()
-                    .fillUserData(AuthConfig.USERNAME, AuthConfig.PASSWORD)
-                    .clickLoginButton();
+        initLoginPage()
+                .fillUserData(AuthConfig.USERNAME, AuthConfig.PASSWORD)
+                .clickLoginButton();
 
-            $("span[data-test='title']").shouldBe(Condition.visible)
-                    .shouldHave(Condition.text(PageConstants.PRODUCTS_PAGE_TITLE));
-            isLoggedIn = true;
-        }
+        $("span[data-test='title']").shouldBe(Condition.visible)
+                .shouldHave(Condition.text(PageConstants.PRODUCTS_PAGE_TITLE));
         return new LoginPage();
     }
 

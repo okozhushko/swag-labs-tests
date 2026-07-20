@@ -7,6 +7,7 @@ import org.example.constants.DefaultDuration;
 import org.example.constants.PageConstants;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static org.example.actions.IndexedElements.byPosition;
 
 public class CheckoutOverviewPage {
 
@@ -26,23 +27,23 @@ public class CheckoutOverviewPage {
         return new CheckoutOverviewPage();
     }
 
-    public CheckoutOverviewPage checkOverviewItemInfo(int labelIndex, String label, String value) {
-        itemTitle.get(labelIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+    public CheckoutOverviewPage checkOverviewItemInfo(int labelPosition, String label, String value) {
+        byPosition(itemTitle, labelPosition).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(label));
-        itemDescr.get(labelIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+        byPosition(itemDescr, labelPosition).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(value));
         return this;
     }
-    public CheckoutOverviewPage checkShipmentInfo(int labelIndex, String label, String value) {
-        labelList.get(labelIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+    public CheckoutOverviewPage checkShipmentInfo(int labelPosition, String label, String value) {
+        byPosition(labelList, labelPosition).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(label));
-        fieldList.get(labelIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+        byPosition(fieldList, labelPosition).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .shouldHave(Condition.text(value));
         return this;
     }
 
-    public CheckoutOverviewPage checkPrice(int labelIndex, String price, String tax, String total) {
-        checkField(labelList.get(labelIndex - 1), PageConstants.PRICE_TOTAL_LABEL);
+    public CheckoutOverviewPage checkPrice(int labelPosition, String price, String tax, String total) {
+        checkField(byPosition(labelList, labelPosition), PageConstants.PRICE_TOTAL_LABEL);
         checkField(itemTotalLbl, "Item total: $" + price);
         checkField(itemTaxLbl, "Tax: $" + tax);
         checkField(itemFullTotalLbl, "Total: $" + total);

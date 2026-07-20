@@ -7,6 +7,7 @@ import org.example.constants.DefaultDuration;
 import org.example.constants.PageConstants;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static org.example.actions.IndexedElements.byPosition;
 
 public class CartPage {
 
@@ -24,27 +25,27 @@ public class CartPage {
         return new CartPage();
     }
 
-    public CartPage checkCartItem(int itemIndex, Product expectedProduct) {
+    public CartPage checkCartItem(int itemPosition, Product expectedProduct) {
         $(".cart_item").shouldBe(Condition.exist);
-        itemName.get(itemIndex - 1).shouldBe(Condition.visible)
+        byPosition(itemName, itemPosition).shouldBe(Condition.visible)
                 .shouldHave(Condition.text(expectedProduct.getName()));
-        itemDescr.get(itemIndex - 1).shouldBe(Condition.visible)
+        byPosition(itemDescr, itemPosition).shouldBe(Condition.visible)
                 .shouldHave(Condition.text(expectedProduct.getDescription()));
-        itemPrice.get(itemIndex - 1).shouldBe(Condition.visible)
+        byPosition(itemPrice, itemPosition).shouldBe(Condition.visible)
                 .shouldHave(Condition.text(expectedProduct.getPrice()));
         $(".cart_button").shouldBe(Condition.visible)
                 .shouldHave(Condition.text(PageConstants.REMOVE_BTN));
         return this;
     }
 
-    public CartPage clickCartItem(int itemIndex) {
-        itemName.get(itemIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+    public CartPage clickCartItem(int itemPosition) {
+        byPosition(itemName, itemPosition).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .click();
         return this;
     }
 
-    public CartPage verifyItemImage(int itemIndex, String imageUrl) {
-        itemImage.get(itemIndex - 1).shouldHave(Condition.attribute("src", imageUrl));
+    public CartPage verifyItemImage(int itemPosition, String imageUrl) {
+        byPosition(itemImage, itemPosition).shouldHave(Condition.attribute("src", imageUrl));
         return this;
     }
 

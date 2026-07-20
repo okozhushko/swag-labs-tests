@@ -23,21 +23,24 @@ public class CheckoutInfoPage {
     }
 
     public CheckoutInfoPage fillFirstName(String firstName) {
-        firstNameFld.shouldBe(Condition.visible, DefaultDuration.DEFAULT);
+        firstNameFld.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.attribute("placeholder", "First Name"));
         ClearSelectedText.clearValueStepByStep(firstNameFld);
         firstNameFld.val(firstName);
         return this;
     }
 
     public CheckoutInfoPage fillLastName(String lastName) {
-        lastNameFld.shouldBe(Condition.visible, DefaultDuration.DEFAULT);
+        lastNameFld.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.attribute("placeholder", "Last Name"));
         ClearSelectedText.clearValueStepByStep(lastNameFld);
         lastNameFld.sendKeys(lastName);
         return this;
     }
 
     public CheckoutInfoPage fillPostalCode(String postalCode) {
-        postalCodeNameFld.shouldBe(Condition.visible, DefaultDuration.DEFAULT);
+        postalCodeNameFld.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+                .shouldHave(Condition.attribute("placeholder", "Zip/Postal Code"));
         ClearSelectedText.clearValueStepByStep(postalCodeNameFld);
         postalCodeNameFld.sendKeys(postalCode);
         return this;

@@ -4,9 +4,17 @@ import org.example.constants.PageConstants;
 import org.example.constants.TestConstants;
 import org.example.helpers.Faker;
 import org.example.pages.AllItemsPage;
+import org.example.pages.CheckoutCompletePage;
 import org.example.pages.LoginPage;
 import org.example.pages.Product;
+import org.example.pages.SocialLinks;
 import org.testng.annotations.Test;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestCheckProductsPage {
 
@@ -31,15 +39,28 @@ public class TestCheckProductsPage {
         LoginPage.login()
                 .validateLoginSuccess();
 
-        AllItemsPage.initAllItemsPage()
+        AllItemsPage allItemsPage = AllItemsPage.initAllItemsPage()
                 .checkAllPageItemsAvailable()
                 .clickMenu()
                 .verifyMenuItems()
-                .sortBy("Name (A to Z)").verifySortingByNameAscending()
-                .sortBy("Name (Z to A)").verifySortingByNameDescending()
-                .sortBy("Price (low to high)").verifySortingByPriceLowToHigh()
-                .sortBy("Price (high to low)").verifySortingByPriceHighToLow()
-                .checkItemDetails(3, expectedProductFirst)
+                .sortBy("Name (A to Z)");
+
+        List<String> namesSortedAsc = allItemsPage.getProductNames();
+        assertThat(namesSortedAsc).isEqualTo(namesSortedAsc.stream().sorted().collect(Collectors.toList()));
+
+        allItemsPage.sortBy("Name (Z to A)");
+        List<String> namesSortedDesc = allItemsPage.getProductNames();
+        assertThat(namesSortedDesc).isEqualTo(namesSortedDesc.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
+
+        allItemsPage.sortBy("Price (low to high)");
+        List<Double> pricesSortedLow = allItemsPage.getProductPrices();
+        assertThat(pricesSortedLow).isEqualTo(pricesSortedLow.stream().sorted().collect(Collectors.toList()));
+
+        allItemsPage.sortBy("Price (high to low)");
+        List<Double> pricesSortedHigh = allItemsPage.getProductPrices();
+        assertThat(pricesSortedHigh).isEqualTo(pricesSortedHigh.stream().sorted((a, b) -> Double.compare(b, a)).collect(Collectors.toList()));
+
+        allItemsPage.checkItemDetails(3, expectedProductFirst)
                 .clickAddToCartButton(3)
                 .checkItemAddedToBucket("1")
                 .checkRemoveItemBtn(3)
@@ -80,11 +101,20 @@ public class TestCheckProductsPage {
                 .checkShipmentInfo(2, PageConstants.SHIPPING_INFO_LABEL, TestConstants.SHIPPING_INFO)
                 .checkPrice(3, TestConstants.ITEM_TOTAL, TestConstants.TAX_TOTAL, TestConstants.GRAND_TOTAL)
                 .clickFinishBtn()
-                .checkCompleteOrderInfo()
-                .checkFooterSocialLinks("TWITTER")
-                .checkFooterSocialLinks("FACEBOOK")
-                .checkFooterSocialLinks("LINKEDIN")
-                .checkCopyrightNotice()
+                .checkCompleteOrderInfo();
+
+        CheckoutCompletePage checkoutCompletePage = new CheckoutCompletePage();
+
+        String twitterUrl = checkoutCompletePage.clickSocialLinkAndGetRedirectedUrl("TWITTER");
+        assertThat(twitterUrl).isEqualTo(SocialLinks.TWITTER.getRedirectUrl());
+
+        String facebookUrl = checkoutCompletePage.clickSocialLinkAndGetRedirectedUrl("FACEBOOK");
+        assertThat(facebookUrl).isEqualTo(SocialLinks.FACEBOOK.getRedirectUrl());
+
+        String linkedinUrl = checkoutCompletePage.clickSocialLinkAndGetRedirectedUrl("LINKEDIN");
+        assertThat(linkedinUrl).isEqualTo(SocialLinks.LINKEDIN.getRedirectUrl());
+
+        checkoutCompletePage.checkCopyrightNotice()
                 .clickBackHomeBtn();
     }
 }
