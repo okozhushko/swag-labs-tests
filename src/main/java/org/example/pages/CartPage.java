@@ -37,10 +37,14 @@ public class CartPage {
         return this;
     }
 
-    public CartPage checkCartItemDescription(int item, String image) {
-        itemName.get(item - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
+    public CartPage clickCartItem(int itemIndex) {
+        itemName.get(itemIndex - 1).shouldBe(Condition.visible, DefaultDuration.DEFAULT)
                 .click();
-        itemImage.get(item - 1).shouldHave(Condition.attribute("src", image));
+        return this;
+    }
+
+    public CartPage verifyItemImage(int itemIndex, String imageUrl) {
+        itemImage.get(itemIndex - 1).shouldHave(Condition.attribute("src", imageUrl));
         return this;
     }
 

@@ -77,9 +77,12 @@ public class AllItemsPage {
         return this;
     }
 
-    public AllItemsPage clickAndCheckMenuItems() {
+    public AllItemsPage clickMenu() {
         menuIcon.shouldBe(Condition.visible, DefaultDuration.DEFAULT).click();
+        return this;
+    }
 
+    public AllItemsPage verifyMenuItems() {
         List<String> listOfMenuItemLabels = Arrays.asList(PageConstants.MENU_ITEMS);
 
         $(".bm-item-list").$$(".menu-item")
