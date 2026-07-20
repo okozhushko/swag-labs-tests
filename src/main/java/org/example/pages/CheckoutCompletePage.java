@@ -9,6 +9,7 @@ import org.example.constants.DefaultDuration;
 import org.example.constants.PageConstants;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CheckoutCompletePage {
 
@@ -41,7 +42,7 @@ public class CheckoutCompletePage {
 
     public CheckoutCompletePage clickBackHomeBtn() {
         backHomeBtn.shouldBe(Condition.visible, DefaultDuration.DEFAULT)
-                .shouldHave(Condition.text("Back Home"))
+                .shouldHave(Condition.text(PageConstants.BACK_HOME_BTN))
                 .click();
         return this;
     }
@@ -64,13 +65,11 @@ public class CheckoutCompletePage {
         return checkUserRedirected(social.getRedirectUrl());
     }
 
-    public static CheckoutCompletePage checkUserRedirected(String link) {
+    public static CheckoutCompletePage checkUserRedirected(String expectedUrl) {
         String currentWindow = WebDriverRunner.getWebDriver().getWindowHandle();
         Selenide.switchTo().window(1);
         String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
-        if (!currentUrl.equals(link)) {
-            throw new AssertionError("Expected URL to be " + link + " but found " + currentUrl);
-        }
+        assertThat(currentUrl).as("Redirected URL").isEqualTo(expectedUrl);
         WebDriverRunner.getWebDriver().close();
         Selenide.switchTo().window(currentWindow);
         return new CheckoutCompletePage();
