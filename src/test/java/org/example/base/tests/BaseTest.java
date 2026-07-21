@@ -17,9 +17,19 @@ public class BaseTest {
 
     protected WebDriver driver;
 
+    // Headless is opt-in for local runs (real browser stays visible by default)
+    // but turns on automatically in CI: GitHub Actions runners have no display
+    // server, so a headed launch would just hang/fail there. Either the
+    // "selenide.headless" system property (explicit override, also honoured by
+    // Selenide's own auto-created driver via Configuration) or the "CI" env var
+    // GitHub Actions sets on every run enables it.
+    private static final boolean HEADLESS = Boolean.parseBoolean(
+            System.getProperty("selenide.headless", System.getenv("CI") != null ? "true" : "false")
+    );
+
     @BeforeMethod
     public void setUp() {
-        System.out.println(">>> BaseTest setUp started");
+        System.out.println(">>> BaseTest setUp started (headless=" + HEADLESS + ")");
 
         WebDriverManager.chromedriver().setup();
 
@@ -36,6 +46,16 @@ public class BaseTest {
                 "--incognito",
                 "--disable-save-password-bubble"
         );
+
+        if (HEADLESS) {
+            options.addArguments(
+                    "--headless=new",
+                    "--disable-gpu",
+                    "--no-sandbox",
+                    "--disable-dev-shm-usage",
+                    "--window-size=1920,1080"
+            );
+        }
 
         options.setExperimentalOption("prefs", Map.of(
                 "credentials_enable_service", false,
