@@ -55,10 +55,19 @@ jobs:
       # Belt-and-braces static check: catches an accidentally committed
       # `@Test(enabled = false)` immediately, for free, before the e2e job
       # below spends time on a browser run that's silently missing a test.
+      # Squashes each file to a single line first (via `tr`) so a
+      # multi-line `@Test(\n  enabled = false,\n  ...\n)` annotation is
+      # still caught — a plain single-line grep misses that formatting.
       - name: Fail on disabled tests (@Test(enabled = false))
         run: |
-          if grep -rEn '@Test\s*\(\s*[^)]*enabled\s*=\s*false' src/test/java; then
-            echo "::error::@Test(enabled = false) found above — remove it before merging."
+          found=0
+          while IFS= read -r -d '' file; do
+            if tr '\n' ' ' < "$file" | grep -qE '@Test\s*\([^)]*enabled\s*=\s*false'; then
+              echo "::error file=$file::@Test(enabled = false) found — remove it before merging."
+              found=1
+            fi
+          done < <(find src/test/java -name '*.java' -print0)
+          if [ "$found" -eq 1 ]; then
             exit 1
           fi
           echo "No disabled tests found in src/test/java."
@@ -109,13 +118,13 @@ jobs:
       # own CI-env-var detection: it also makes Selenide's own
       # auto-created driver (used by tests that don't extend BaseTest)
       # run headless, since there's no display server on this runner.
-      - name: Run tests (mvn test)
+      - name: Run tests (mvn clean test)
         uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
         with:
           timeout_minutes: 10
           max_attempts: 2
           retry_wait_seconds: 45
-          command: mvn --batch-mode --no-transfer-progress -Dselenide.headless=true test
+          command: mvn --batch-mode --no-transfer-progress -Dselenide.headless=true clean test
 
       # TestNG/Surefire already emit both a machine-readable report
       # (TEST-*.xml / junitreports/*.xml) and a human-readable one
