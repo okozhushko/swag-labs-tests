@@ -1,0 +1,132 @@
+name: CI
+
+# Push/PR give fast feedback on main; workflow_dispatch allows an on-demand
+# re-run (e.g. to spot-check after a transient saucedemo.com hiccup); the
+# nightly schedule catches drift/regressions on the live public site even
+# when nobody's actively pushing.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # 03:00 UTC — off-hours, unlikely to overlap with anyone actively
+    # iterating on the suite during the day.
+    - cron: '0 3 * * *'
+  workflow_dispatch: {}
+
+# A new push/dispatch on the same branch supersedes any run already in
+# flight instead of piling up alongside it.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Least-privilege default: nothing in this workflow needs to write to the
+# repo or touch packages — read-only is enough to check out code, run
+# Maven, and upload artifacts.
+permissions:
+  contents: read
+
+jobs:
+  # Fast, network-independent checks that gate the (slower, live-site) e2e
+  # job below. No point launching Chrome and hitting saucedemo.com if the
+  # code doesn't even compile.
+  quality-gates:
+    name: Quality gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up JDK 20
+        uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
+        with:
+          distribution: temurin
+          java-version: '20'
+          # Caches ~/.m2/repository keyed on the pom.xml hash — a hit skips
+          # re-downloading every dependency from scratch.
+          cache: maven
+
+      - name: Compile (main + test sources)
+        run: mvn --batch-mode --no-transfer-progress compile test-compile
+
+      # Belt-and-braces static check: catches an accidentally committed
+      # `@Test(enabled = false)` immediately, for free, before the e2e job
+      # below spends time on a browser run that's silently missing a test.
+      - name: Fail on disabled tests (@Test(enabled = false))
+        run: |
+          if grep -rEn '@Test\s*\(\s*[^)]*enabled\s*=\s*false' src/test/java; then
+            echo "::error::@Test(enabled = false) found above — remove it before merging."
+            exit 1
+          fi
+          echo "No disabled tests found in src/test/java."
+
+  e2e:
+    name: E2E (TestNG + Selenide, headless Chrome)
+    needs: quality-gates
+    runs-on: ubuntu-latest
+    # Generous enough to cover the retry below (2 attempts x up to 10
+    # minutes each) plus setup/dependency-resolution overhead.
+    timeout-minutes: 30
+
+    env:
+      CI: 'true'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Set up JDK 20
+        uses: actions/setup-java@03ad4de0992f5dab5e18fcb136590ce7c4a0ac95 # v5.6.0
+        with:
+          distribution: temurin
+          java-version: '20'
+          cache: maven
+
+      # WebDriverManager needs an actual Chrome binary present locally to
+      # detect its version and fetch a matching chromedriver — install it
+      # explicitly and pinned rather than relying on whatever happens to
+      # ship (or not) on the ubuntu-latest image.
+      - name: Set up Chrome
+        uses: browser-actions/setup-chrome@2e1d749697dd1612b833dba4a722266286fbefcd # v2.1.2
+        with:
+          chrome-version: stable
+
+      # Deliberately NOT caching ~/.cache/selenium (WebDriverManager's
+      # chromedriver cache) by a static key: Chrome auto-updates between
+      # runs and a stale cached chromedriver silently mismatches a newer
+      # Chrome binary (hit exactly this locally already). Let
+      # WebDriverManager hit the network fresh every run to resolve a
+      # driver matching whatever Chrome version is actually installed.
+      #
+      # Wraps the whole `mvn test` invocation in an outer retry — this
+      # drives a real browser against a live public site (saucedemo.com)
+      # from a shared CI IP, so a second attempt has a real chance of
+      # recovering from a transient network/site hiccup.
+      # -Dselenide.headless=true is belt-and-braces alongside BaseTest's
+      # own CI-env-var detection: it also makes Selenide's own
+      # auto-created driver (used by tests that don't extend BaseTest)
+      # run headless, since there's no display server on this runner.
+      - name: Run tests (mvn test)
+        uses: nick-fields/retry@ad984534de44a9489a53aefd81eb77f87c70dc60 # v4.0.0
+        with:
+          timeout_minutes: 10
+          max_attempts: 2
+          retry_wait_seconds: 45
+          command: mvn --batch-mode --no-transfer-progress -Dselenide.headless=true test
+
+      # TestNG/Surefire already emit both a machine-readable report
+      # (TEST-*.xml / junitreports/*.xml) and a human-readable one
+      # (emailable-report.html, index.html) into this directory — upload it
+      # as-is rather than re-deriving a separate report. always() so a
+      # failing run is still diagnosable from the Actions UI.
+      - name: Upload TestNG/Surefire reports
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        if: always()
+        with:
+          name: surefire-reports
+          path: target/surefire-reports
+          retention-days: 14
+          if-no-files-found: warn
