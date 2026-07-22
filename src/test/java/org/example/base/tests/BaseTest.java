@@ -17,15 +17,26 @@ public class BaseTest {
 
     protected WebDriver driver;
 
-    // Headless is opt-in for local runs (real browser stays visible by default)
-    // but turns on automatically in CI: GitHub Actions runners have no display
-    // server, so a headed launch would just hang/fail there. Either the
-    // "selenide.headless" system property (explicit override, also honoured by
-    // Selenide's own auto-created driver via Configuration) or the "CI" env var
-    // GitHub Actions sets on every run enables it.
-    private static final boolean HEADLESS = Boolean.parseBoolean(
-            System.getProperty("selenide.headless", System.getenv("CI") != null ? "true" : "false")
-    );
+    // Flip this to switch the local default between headed and headless.
+    private static final boolean LOCAL_DEFAULT_HEADLESS = false;
+
+    private static final boolean HEADLESS = resolveHeadless();
+
+    // Resolution order: an explicit "-Dselenide.headless=..." always wins
+    // (also honoured by Selenide's own auto-created driver via Configuration);
+    // otherwise CI runs headless automatically (GitHub Actions runners have no
+    // display server, so a headed launch would just hang/fail there); otherwise
+    // LOCAL_DEFAULT_HEADLESS above applies.
+    private static boolean resolveHeadless() {
+        String override = System.getProperty("selenide.headless");
+        if (override != null) {
+            return Boolean.parseBoolean(override);
+        }
+        if (System.getenv("CI") != null) {
+            return true;
+        }
+        return LOCAL_DEFAULT_HEADLESS;
+    }
 
     @BeforeMethod
     public void setUp() {
