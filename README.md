@@ -10,16 +10,16 @@ The goal of this project is to automate the testing of the Swag Labs web applica
 
 - **Selenide** – for browser automation.
 - **TestNG** – for organizing and running tests.
-- **Java 11+** – for writing the tests.
+- **Java 20** – for writing the tests.
 
 ## Prerequisites
 
 Before getting started, make sure you have the following tools installed on your machine:
 
-- **Java 11** or newer.
+- **Java 20** or newer.
 - **Maven** (for dependency management and running tests).
 - **Git** (for cloning the repository).
-- **ChromeDriver** (or another browser driver, depending on the browser you are using).
+- **Google Chrome** (the matching ChromeDriver is downloaded automatically by WebDriverManager).
 
 ## Installation
 
@@ -27,3 +27,21 @@ Before getting started, make sure you have the following tools installed on your
 
    ```bash
    git clone https://github.com/okozhushko/swag-labs-tests.git
+   cd swag-labs-tests
+   ```
+
+## Running the tests
+
+```bash
+# all tests
+mvn clean test
+
+# a single class or method
+mvn test -Dtest=TestCheckUserLogin
+mvn test -Dtest=TestCheckUserLogin#testLogout
+
+# headless mode (enabled automatically when the CI environment variable is set)
+mvn test -Dselenide.headless=true
+```
+
+Test classes must be named `Test*` to be picked up by Surefire.

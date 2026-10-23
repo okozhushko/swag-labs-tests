@@ -36,3 +36,14 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Playwright MCP logs ###
+.playwright-mcp/
+
+### Never commit keys or secrets ###
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+Documents
+Documents.pub
