@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Test Suite">
-    <test name="Profile Tests">
+    <test name="Swag Labs UI Tests">
         <classes>
-            <class name="org.example.base.tests.ProfileTests"/>
+            <class name="org.example.base.tests.TestCheckUserLogin"/>
+            <class name="org.example.base.tests.TestCheckProductsPage"/>
+            <class name="org.example.base.tests.TestCheckCartPage"/>
         </classes>
     </test>
 </suite>
