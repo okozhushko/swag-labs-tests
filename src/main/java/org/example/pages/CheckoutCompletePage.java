@@ -55,7 +55,7 @@ public class CheckoutCompletePage {
         SocialLinks social = SocialLinks.fromString(socialName);
 
         SelenideElement socialLink = $$("ul.social a")
-                .filter(Condition.text(socialName))
+                .filter(Condition.text(social.getLinkText()))
                 .filter(Condition.attribute("href", social.getIconUrl()))
                 .first()
                 .shouldBe(Condition.visible, DefaultDuration.DEFAULT);

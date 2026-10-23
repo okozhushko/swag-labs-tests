@@ -34,6 +34,7 @@ public class PageConstants {
     // ==================== Menu Items ====================
     public static final String[] MENU_ITEMS = {
             "All Items",
+            "Dynamic Catalog",
             "About",
             "Logout",
             "Reset App State"
