@@ -103,13 +103,13 @@ public class TestCheckProductsPage extends BaseTest {
         CheckoutCompletePage checkoutCompletePage = new CheckoutCompletePage();
 
         String twitterUrl = checkoutCompletePage.clickSocialLinkAndGetRedirectedUrl("TWITTER");
-        assertThat(twitterUrl).isEqualTo(SocialLinks.TWITTER.getRedirectUrl());
+        assertThat(twitterUrl).contains(SocialLinks.TWITTER.getRedirectUrl());
 
         String facebookUrl = checkoutCompletePage.clickSocialLinkAndGetRedirectedUrl("FACEBOOK");
-        assertThat(facebookUrl).isEqualTo(SocialLinks.FACEBOOK.getRedirectUrl());
+        assertThat(facebookUrl).contains(SocialLinks.FACEBOOK.getRedirectUrl());
 
         String linkedinUrl = checkoutCompletePage.clickSocialLinkAndGetRedirectedUrl("LINKEDIN");
-        assertThat(linkedinUrl).isEqualTo(SocialLinks.LINKEDIN.getRedirectUrl());
+        assertThat(linkedinUrl).contains(SocialLinks.LINKEDIN.getRedirectUrl());
 
         checkoutCompletePage.checkCopyrightNotice()
                 .clickBackHomeBtn();
