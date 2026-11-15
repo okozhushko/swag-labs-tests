@@ -7,6 +7,9 @@ import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import org.example.constants.DefaultDuration;
 import org.example.constants.PageConstants;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$$;
 
@@ -64,13 +67,17 @@ public class CheckoutCompletePage {
         return closePopupAndGetRedirectedUrl();
     }
 
+    /**
+     * Returns the URL-decoded address of the opened tab: a site behind a login wall
+     * (e.g. Facebook) keeps the target page in a query parameter such as {@code ?next=}.
+     */
     private static String closePopupAndGetRedirectedUrl() {
         String currentWindow = WebDriverRunner.getWebDriver().getWindowHandle();
         Selenide.switchTo().window(1);
         String currentUrl = WebDriverRunner.getWebDriver().getCurrentUrl();
         WebDriverRunner.getWebDriver().close();
         Selenide.switchTo().window(currentWindow);
-        return currentUrl;
+        return URLDecoder.decode(currentUrl, StandardCharsets.UTF_8);
     }
 }
 
